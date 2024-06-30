@@ -5,8 +5,8 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+import java.util.Objects;
 @Getter
 @Setter
 @ToString
@@ -14,17 +14,17 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "LoaiTruong")
+@Table(name = "loaitruong")
 public class LoaiTruong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "tenLoaiTruong", length = 50, nullable = false)
     private String tenLoaiTruong;
 
-    @OneToMany(mappedBy = "LoaiTruong", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "loaiTruong", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Truong> truongs = new ArrayList<>();
 
@@ -39,6 +39,7 @@ public class LoaiTruong {
         return getId() != null && Objects.equals(getId(),
                 loaiTruong.getId());
     }
+
     @Override
     public int hashCode() {
         return getClass().hashCode();

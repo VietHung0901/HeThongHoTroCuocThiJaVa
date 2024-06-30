@@ -21,10 +21,10 @@ public class NoiDung {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "tenNoiDung", length = 50, nullable = false)
     private String tenNoiDung;
 
-    @OneToMany(mappedBy = "NoiDung", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "noiDung", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ChiTietNoiDung> chiTietNoiDungs = new ArrayList<>();
 

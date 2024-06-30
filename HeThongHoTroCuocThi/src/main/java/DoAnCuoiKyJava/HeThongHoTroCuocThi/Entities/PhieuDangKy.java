@@ -3,7 +3,9 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,21 +14,31 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "MonThi")
-public class MonThi {
+@Builder
+@Table(name = "PhieuDangKy")
+public class PhieuDangKy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "tenMonThi", length = 50, nullable = false)
-    private String tenMonThi;
+    private Date ngayDangKy;
 
-    @OneToMany(mappedBy = "monThi", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cuocThi_id", referencedColumnName = "id")
     @ToString.Exclude
-    private List<CuocThi> cuocThis = new ArrayList<>();
+    private CuocThi cuocThi;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ToString.Exclude
+    private User user;
+
+    private String sdt;
+
+    private String email;
+
+    private Long truongId;
 
     private int trangThai;
 
@@ -35,13 +47,12 @@ public class MonThi {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) !=
                 Hibernate.getClass(o)) return false;
-        MonThi monThi = (MonThi) o;
+        PhieuDangKy phieudangky = (PhieuDangKy) o;
         return getId() != null && Objects.equals(getId(),
-                monThi.getId());
+                phieudangky.getId());
     }
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }

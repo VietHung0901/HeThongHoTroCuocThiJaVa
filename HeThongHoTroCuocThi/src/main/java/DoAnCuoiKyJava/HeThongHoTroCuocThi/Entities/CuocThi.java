@@ -22,7 +22,7 @@ public class CuocThi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "tenCuocThi", length = 50, nullable = false)
     private String tenCuocThi;
 
     private Date ngayThi;
@@ -36,14 +36,17 @@ public class CuocThi {
     @ToString.Exclude
     private MonThi monThi;
 
-    @OneToMany(mappedBy = "chiTietNoiDung", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cuocThi", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ChiTietNoiDung> chiTietNoiDungs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chiTietQuyDinh", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cuocThi", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ChiTietQuyDinh> chiTietQuyDinhs = new ArrayList<>();
 
+    @OneToMany(mappedBy = "cuocThi", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<PhieuDangKy> phieuDangKIES = new ArrayList<>();
     private int trangThai;
 
     @Override
