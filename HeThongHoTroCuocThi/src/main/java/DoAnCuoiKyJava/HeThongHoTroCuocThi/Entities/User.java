@@ -53,6 +53,8 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Truong truong;
 
+    private String imageUrl;
+
     private int trangThai;
 
     @Column(name = "provider", length = 50)

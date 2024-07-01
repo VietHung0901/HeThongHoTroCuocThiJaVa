@@ -1,6 +1,8 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.UserRequest;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.TruongService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final TruongService truongService;
+
     @GetMapping("/login")
     public String login() {
         return "user/login";
@@ -27,12 +31,14 @@ public class UserController {
 
     @GetMapping("/register")
     public String register(@NotNull Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserRequest());
+        model.addAttribute("listTruong", truongService.getAllTruong());
         return "user/register";
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("user") User user,
+//    public String register(@Valid @ModelAttribute("user") User user,
+    public String register(UserRequest userRequest,
                            @NotNull BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors()) {
@@ -41,8 +47,19 @@ public class UserController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
+            model.addAttribute("listTruong", truongService.getAllTruong());
             return "user/register";
         }
+
+        String image = userService.saveImage(userRequest.getImageUrl());
+        User user = new User();
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(userRequest.getPassword());
+        user.setPhone(userRequest.getPhone());
+        user.setEmail(userRequest.getEmail());
+        user.setImageUrl(image);
+        user.setTruong(userRequest.getTruong());
+        user.setTrangThai(1);
         userService.Save(user);
         userService.setDefaultRole(user.getUsername());
         return "redirect:/login";
