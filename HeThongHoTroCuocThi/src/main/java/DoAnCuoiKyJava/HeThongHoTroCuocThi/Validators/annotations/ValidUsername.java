@@ -1,6 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Validators.annotations;
 
-import Tuan3.TranVietHung_Tuan3.Validators.ValidUsernameValidator;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Validators.ValidUsernameValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.Retention;

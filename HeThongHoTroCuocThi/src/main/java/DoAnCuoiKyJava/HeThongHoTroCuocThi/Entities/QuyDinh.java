@@ -24,6 +24,8 @@ public class QuyDinh {
     @Column(name = "tenQuyDinh", length = 50, nullable = false)
     private String tenQuyDinh;
 
+    private String imageUrl;
+
     @OneToMany(mappedBy = "quyDinh", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ChiTietQuyDinh> chiTietQuyDinhs = new ArrayList<>();

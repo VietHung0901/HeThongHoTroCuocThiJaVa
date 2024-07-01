@@ -1,14 +1,16 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Validators;
 
-import Tuan3.TranVietHung_Tuan3.Services.UserService;
-import Tuan3.TranVietHung_Tuan3.Validators.annotations.ValidUsername;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Validators.annotations.ValidUsername;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RequiredArgsConstructor
 public class ValidUsernameValidator implements ConstraintValidator<ValidUsername, String> {
 
+    @Autowired
     private UserService userService;
 
     @Override

@@ -3,7 +3,9 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,23 +14,24 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "NoiDung")
-public class NoiDung {
+@Builder
+@Table(name = "PhieuKetQua")
+public class PhieuKetQua {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "tenNoiDung", length = 50, nullable = false)
-    private String tenNoiDung;
+    private int phut;
 
-    private String imageUrl;
+    private int giay;
 
-    @OneToMany(mappedBy = "noiDung", cascade = CascadeType.ALL)
+    private int diem;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phieuDangKy_id", referencedColumnName = "id")
     @ToString.Exclude
-    private List<ChiTietNoiDung> chiTietNoiDungs = new ArrayList<>();
+    private PhieuDangKy phieuDangKy;
 
     private int trangThai;
 
@@ -37,13 +40,12 @@ public class NoiDung {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) !=
                 Hibernate.getClass(o)) return false;
-        NoiDung noiDung = (NoiDung) o;
+        PhieuKetQua phieuKetQua = (PhieuKetQua) o;
         return getId() != null && Objects.equals(getId(),
-                noiDung.getId());
+                phieuKetQua.getId());
     }
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }
