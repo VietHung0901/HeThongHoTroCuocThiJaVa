@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm cuộc thi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include other necessary CSS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<div class="container">
+    <div class="add-school">
+        <h4>Thêm cuộc thi</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <form th:action="@{/cuocthis/add}" th:object="${cuocThiRequest}" method="post">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                        Vui lòng điền đầy đủ thông tin và chọn các mục bắt buộc.
+                    </div>
+                    <div id="step-1" class="step-container active">
+                        <div class="form-group">
+                            <label for="tenCuocThi" class="control-label">Tên cuộc thi</label>
+                            <input type="text" id="tenCuocThi" name="tenCuocThi" class="form-control"
+                                   th:classappend="${#fields.hasErrors('tenCuocThi')} ? 'is-invalid' : ''"
+                                   th:field="*{tenCuocThi}" />
+                            <span th:if="${#fields.hasErrors('tenCuocThi')}" class="text-danger">Thông tin không hợp lệ.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="ngayThi" class="control-label">Ngày thi</label>
+                            <input type="date" id="ngayThi" name="ngayThi" class="form-control"
+                                   th:classappend="${#fields.hasErrors('ngayThi')} ? 'is-invalid' : ''"
+                                   th:field="*{ngayThi}" />
+                            <span th:if="${#fields.hasErrors('ngayThi')}" class="text-danger">Thông tin không hợp lệ.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="soLuong" class="control-label">Số lượng thí sinh</label>
+                            <input type="number" id="soLuong" name="soLuong" class="form-control"
+                                   th:classappend="${#fields.hasErrors('soLuong')} ? 'is-invalid' : ''"
+                                   th:field="*{soLuong}" />
+                            <span th:if="${#fields.hasErrors('soLuong')}" class="text-danger">Thông tin không hợp lệ.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="diaDiemThi" class="control-label">Địa điểm</label>
+                            <input type="text" id="diaDiemThi" name="diaDiemThi" class="form-control"
+                                   th:classappend="${#fields.hasErrors('diaDiemThi')} ? 'is-invalid' : ''"
+                                   th:field="*{diaDiemThi}" />
+                            <span th:if="${#fields.hasErrors('diaDiemThi')}" class="text-danger">Thông tin không hợp lệ.</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="monThi">Tên môn thi</label>
+                            <select id="monThi.id" name="monThi.id" class="form-control"
+                                    th:classappend="${#fields.hasErrors('monThi.id')} ? 'is-invalid' : ''"
+                                    th:field="*{monThi.id}">
+                                <option value="">-- Chọn Môn Thi --</option>
+                                <option th:each="monThi : ${allMonThis}" th:value="${monThi.id}" th:text="${monThi.tenMonThi}"></option>
+                            </select>
+                            <span th:if="${#fields.hasErrors('monThi.id')}" class="text-danger">Thông tin không hợp lệ.</span>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" onclick="nextStep(2)" class="btn btn-primary custom-btn">Tiếp tục</button>
+                        </div>
+                    </div>
+                    <div id="step-2" class="step-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label">Chọn quy định</label>
+                            <div class="checkbox-list">
+                                <div th:each="quyDinh : ${allQuyDinhs}" class="checkbox-item">
+                                    <input type="checkbox" id="'quyDinh' + ${quyDinh.id}" name="selectedQuyDinhs" class="pointer-cursor"
+                                           th:value="${quyDinh.id}" />
+                                    <label th:for="'quyDinh' + ${quyDinh.id}" th:text="${quyDinh.tenQuyDinh}"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" onclick="nextStep(1)" class="btn btn-primary custom-btn custom-btn-left">Quay lại</button>
+                            <button type="button" onclick="nextStep(3)" class="btn btn-primary custom-btn custom-btn-right">Tiếp tục</button>
+                        </div>
+                    </div>
+                    <div id="step-3" class="step-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label">Chọn nội dung</label>
+                            <div class="checkbox-list">
+                                <div th:each="noiDung : ${allNoiDungs}" class="checkbox-item">
+                                    <input type="checkbox" id="'noiDung' + ${noiDung.id}" name="selectedNoiDungs" class="pointer-cursor"
+                                           th:value="${noiDung.id}" />
+                                    <label th:for="'noiDung' + ${noiDung.id}" th:text="${noiDung.tenNoiDung}"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" onclick="nextStep(2)" class="btn btn-primary custom-btn">Quay lại</button>
+                            <input type="submit" value="Tạo cuộc thi" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- Include other necessary JavaScript files -->
+<script>
+    var currentStep = 1;
+    var stepContainers = document.getElementsByClassName('step-container');
+
+    function nextStep(step) {
+        stepContainers[currentStep - 1].style.display = 'none';
+        currentStep = step;
+        stepContainers[currentStep - 1].style.display = 'block';
+    }
+</script>
+</body>
+</html>

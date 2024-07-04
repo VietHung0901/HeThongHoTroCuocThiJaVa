@@ -30,18 +30,48 @@
                         <a class="nav-link active" aria-current="page"
                            href="/">Home</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
+<!--                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
                         <a class="nav-link" href="/books">
                             List Book
+                        </a>
+                    </li>-->
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/monthis">
+                            Môn Thi
                         </a>
                     </li>
                     <li class="nav-item"
                         sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a class="nav-link" href="/books/add">
-                            Add Book
+                        <a class="nav-link" href="/noidungs">
+                            Nội Dung
                         </a>
                     </li>
                     <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/quydinhs">
+                            Quy Định
+                        </a>
+                    </li>
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/loaitruongs">
+                            Loại Trường
+                        </a>
+                    </li>
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/truongs">
+                            Trường
+                        </a>
+                    </li>
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/cuocthis">
+                            Cuộc Thi
+                        </a>
+                    </li>
+                    <!--<li class="nav-item"
                         sec:authorize="hasAnyAuthority('ADMIN')">
                         <a class="nav-link" href="/categories">
                             list category
@@ -51,7 +81,7 @@
                         <a class="nav-link" href="/cart">
                             Cart
                         </a>
-                    </li>
+                    </li>-->
                     <li sec:authorize="isAuthenticated()">
                         <span th:text="${#authentication.getName()}"></span>
                         <form th:action="@{/logout}" method="post">
@@ -59,6 +89,7 @@
                         </form>
                     </li>
                     <li sec:authorize="!isAuthenticated()">
+
                         <a class="btn btn-outline-primary" href="/login">
                             Login
                         </a>
@@ -81,3 +112,187 @@
 </footer>
 </body>
 </html>
+
+
+<!--
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <link th:fragment="link-css" rel="stylesheet"
+          th:href="@{/css/Layout.css}">
+    <link th:fragment="link-css" rel="stylesheet"
+          th:href="@{/css/theme.css}">
+    <script th:src="@{/js/Layout.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    &lt;!&ndash;<script src="CKEditor5/ckfinder/ckfinder.js"></script>
+    <script src="CKEditor5/ckeditor/ckeditor.js"></script>&ndash;&gt;
+</head>
+<body>
+&lt;!&ndash; Block__Element&#45;&#45;Modifier&ndash;&gt;
+<header class="header">
+    <div class="header-icon" onclick="toggleMenu()">
+        <i class="fas fa-list"></i>
+    </div>
+    <div class="header-logo">
+        <a th:href="@{/}">
+            <img th:src="@{/images/Logo.png}" alt="Alternate Text" />
+        </a>
+    </div>
+    <div class="header-login">
+        <div th:replace="fragments/login :: login"></div>
+    </div>
+</header>
+<div class="container">
+    <div class="container-menu">
+        <div class="menu-icon">
+            <ul class="container-menu-list">
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/home}">
+                        <i class="fas fa-home"></i>
+                        <p class="container-menu-item-content">Trang chủ</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/cuoc-this}">
+                        <i class="fas fa-trophy"></i>
+                        <p class="container-menu-item-content">Cuộc thi</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/loai-truongs}">
+                        <i class="fas fa-school"></i>
+                        <p class="container-menu-item-content">Loại trường</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/truongs}">
+                        <i class="fas fa-university"></i>
+                        <p class="container-menu-item-content">Trường</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/quy-dinhs}">
+                        <i class="fas fa-gavel"></i>
+                        <p class="container-menu-item-content">Quy định</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/noi-dungs}">
+                        <i class="fas fa-file-alt"></i>
+                        <p class="container-menu-item-content">Nội Dung</p>
+                    </a>
+                </li>
+                <li class="container-menu-item">
+                    <a th:href="@{/admin/mon-this}">
+                        <i class="fas fa-book"></i>
+                        <p class="container-menu-item-content">Bài thi</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-content" style="width: 100%;">
+        <div class="container-content-body" style="padding-bottom: 60px;">
+            <div th:insert="~{fragments/content :: content}"></div>
+        </div>
+    </div>
+
+    <footer class="footer" id="footer">
+        <div class="footer-row">
+            <div class="footer-column">
+                <h4>Giới thiệu</h4>
+                <p>Mô tả về trang web hoặc công ty.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Thông tin liên hệ</h4>
+                <div class="footer-column">
+                    <i class="fas fa-envelope"> info@iigteamvn.edu.vn </i>
+                </div>
+                <div class="footer-column">
+                    <i class="fas fa-phone"> +123 456 789</i>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Đồng hồ</h4>
+                <div class="codepro-time">
+                    <span id="codepro-hour"></span>
+                    <div class="footer-column">
+                        <span id="codepro-date"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Địa chỉ văn phòng</h4>
+                <p><i class="fas fa-school"></i> Khu Công nghệ cao Xa Lộ Hà Nội, Hiệp Phú, Thủ Đức, Thành phố Hồ Chí Minh</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script th:inline="javascript">
+    var footer = document.getElementById("footer");
+    var scrollPosition, scrollHeight;
+
+    window.addEventListener("load", function () {
+        scrollPosition = window.scrollY || window.pageYOffset;
+        scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        if (scrollHeight <= 0) {
+            footer.classList.add("hidden");
+        } else {
+            footer.classList.remove("hidden");
+        }
+    });
+
+    window.addEventListener("scroll", function () {
+        scrollPosition = window.scrollY || window.pageYOffset;
+        scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        if (scrollPosition >= scrollHeight) {
+            footer.classList.add("hidden");
+        } else {
+            footer.classList.remove("hidden");
+        }
+    });
+
+    var myVar = setInterval(function () {
+        myTimer()
+    }, 1000);
+
+    function myTimer() {
+        var d = new Date();
+        var t = d.toLocaleTimeString();
+        document.getElementById("codepro-hour").innerHTML = t;
+    }
+
+    var n = new Date();
+    var t;
+    if (n.getTimezoneOffset() == 0) {
+        t = n.getTime() + (7 * 60 * 60 * 1000);
+    } else {
+        t = n.getTime();
+    }
+    n.setTime(t);
+    var dn = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+    var d = n.getDay();
+    var m = n.getMonth() + 1;
+    var y = n.getFullYear();
+    var date = dn[d] + ", " + (n.getDate() < 10 ? "0" : "") + n.getDate() + "/" + (m < 10 ? "0" : "") + m + "/" + y;
+    document.getElementById("codepro-date").innerHTML = date;
+</script>
+</body>
+</html>
+-->
+

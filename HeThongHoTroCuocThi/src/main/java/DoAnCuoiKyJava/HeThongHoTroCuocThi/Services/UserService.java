@@ -15,15 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.nio.file.*;
 import java.util.Optional;
 //Các thư viện dùng lưu ảnh vào local
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
@@ -85,13 +84,24 @@ public class UserService implements UserDetailsService {
 
         // Đường dẫn lưu file
         String uploadDir = "src/main/resources/static/images/";
-        Path filePath = Paths.get(uploadDir, fileName);
+
+        Path uploadPath = Paths.get(uploadDir);
 
         try {
+            // Tạo thư mục nếu chưa tồn tại
+            if (Files.notExists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Đường dẫn của file
+            Path filePath = uploadPath.resolve(fileName);
+
             // Lưu file vào thư mục
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (FileAlreadyExistsException e) {
+            log.warn("File đã tồn tại: " + fileName);
         } catch (IOException e) {
-            throw new RuntimeException("Could not save file: " + fileName, e);
+            throw new RuntimeException("Không thể lưu file: " + fileName, e);
         }
 
         // Trả về đường dẫn của file đã lưu

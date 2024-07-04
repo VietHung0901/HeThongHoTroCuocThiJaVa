@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Cuộc Thi</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Chỉnh Cuộc Thi</h1>
+    <form th:action="@{/cuocthis/edit/{id}(id=${cuocThi.id})}" th:object="${cuocThi}" method="post">
+        <div class="form-group">
+            <label for="tenCuocThi">Tên Cuộc Thi</label>
+            <input type="text" th:field="*{tenCuocThi}" class="form-control" id="tenCuocThi" placeholder="Nhập tên cuộc thi">
+        </div>
+        <div class="form-group">
+            <label for="ngayThi">Ngày Thi</label>
+            <input type="datetime-local" th:field="*{ngayThi}" class="form-control" id="ngayThi" placeholder="Nhập ngày thi">
+        </div>
+        <div class="form-group">
+            <label for="soLuongThiSinh">Số Lượng Thí Sinh</label>
+            <input type="number" th:field="*{soLuongThiSinh}" class="form-control" id="soLuongThiSinh" placeholder="Nhập số lượng thí sinh">
+        </div>
+        <div class="form-group">
+            <label for="diaDiemThi">Địa Điểm</label>
+            <input type="text" th:field="*{diaDiemThi}" class="form-control" id="diaDiemThi" placeholder="Nhập địa điểm">
+        </div>
+        <div class="form-group">
+            <label for="monThi">Môn Thi</label>
+            <select class="form-control" th:field="*{monThi.id}" id="monThi">
+                <option value="">-- Chọn Môn Thi --</option>
+                <option th:each="monThi : ${allMonThis}" th:value="${monThi.id}" th:text="${monThi.tenMonThi}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>
+<script th:src="@{/js/form.js}"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

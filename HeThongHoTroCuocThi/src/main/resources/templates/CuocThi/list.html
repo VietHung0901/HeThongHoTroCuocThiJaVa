@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách cuộc thi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<div class="container">
+    <div class="school-list">
+        <h1><i class="fas fa-trophy"></i> CUỘC THI</h1>
+        <div class="add-sort">
+            <p>
+                <a class="add-button btn btn-primary" th:href="@{/cuocthis/add}">Tạo cuộc thi</a>
+            </p>
+            <select id="sort-box" class="form-control">
+                <option value="all">Tất cả cuộc thi</option>
+                <option value="upcoming">Cuộc thi sắp tới</option>
+                <option value="past">Cuộc thi đã qua</option>
+            </select>
+        </div>
+
+        <table id="cuocThiTable" class="table mt-3">
+            <thead>
+            <tr>
+                <th>Tên cuộc thi</th>
+                <th>Thời gian thi</th>
+                <th>Số lượng</th>
+                <th>Địa điểm</th>
+                <th>Bài thi</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cuocThi : ${cuocthis}" th:class="${cuocThi.ngayThi < #dates.createNow()} ? 'past' : 'upcoming'">
+                <td th:text="${cuocThi.tenCuocThi}"></td>
+                <td th:text="${#dates.format(cuocThi.ngayThi, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${cuocThi.soLuongThiSinh}"></td>
+                <td th:text="${cuocThi.diaDiemThi}"></td>
+                <td th:text="${cuocThi.monThi.tenMonThi}"></td>
+                <td>
+                    <a class="edit-link btn btn-primary btn-sm" th:href="@{/cuocthis/edit/{id}(id=${cuocThi.id})}">Edit</a>
+                    <a class="details-link btn btn-info btn-sm" th:href="@{/cuocthis/details/{id}(id=${cuocThi.id})}">Details</a>
+                    <a th:if="${cuocThi.trangThai == 0}" class="toggle-status-link btn btn-danger btn-sm" th:href="@{/cuocthis/anhien/{id}(id=${cuocThi.id})}">Ẩn</a>
+                    <a th:if="${cuocThi.trangThai != 0}" class="toggle-status-link btn btn-success btn-sm" th:href="@{/cuocthis/anhien/{id}(id=${cuocThi.id})}">Hiện</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sortBox = document.getElementById("sort-box");
+        const cuocThiTable = document.getElementById("cuocThiTable");
+
+        sortBox.addEventListener("change", function () {
+            const selectedOption = sortBox.value;
+            const rows = cuocThiTable.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                switch (selectedOption) {
+                    case "all":
+                        row.style.display = "table-row";
+                        break;
+                    case "past":
+                        row.style.display = row.classList.contains("past") ? "table-row" : "none";
+                        break;
+                    case "upcoming":
+                        row.style.display = row.classList.contains("upcoming") ? "table-row" : "none";
+                        break;
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Quy Định</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <a class="btn btn-primary" th:href="@{/quydinhs/add}">Thêm Quy Định</a>
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-light">
+                <div class="container-fluid">
+                    <h1>Danh Sách Quy Định</h1>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <!--<th><a th:href="@{/monthis(pageNo=${currentPage}, sortBy='id')}">Id</a></th>-->
+            <th>Tên Quy Định</th>
+            <th>Ảnh</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Vòng lặp hiển thị danh sách Môn Thi -->
+        <tr th:each="quyDinh : ${quydinhs}">
+            <!--<td th:text="${monThi.id}"></td>-->
+            <td th:text="${quyDinh.tenQuyDinh}"></td>
+            <td> <img th:src="${quyDinh.imageUrl}" width="100px" height="100px" alt="Ảnh bị lỗi"></td>
+            <td colspan="2">
+                <form th:action="@{/quydinhs/anhien/{id}(id=${quyDinh.id})}" method="post" style="display: inline;">
+                    <button type="submit" th:classappend="${quyDinh.trangThai == 0 ? 'btn btn-primary' : 'btn btn-danger'}">
+                        <span th:text="${quyDinh.trangThai == 0 ? 'Hiện' : 'Ẩn'}"></span>
+                    </button>
+                </form>
+                <!-- Các nút chỉnh sửa -->
+                <a class="btn btn-primary" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/quydinhs/edit/{id}(id=${quyDinh.id})}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/js/list.js}"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

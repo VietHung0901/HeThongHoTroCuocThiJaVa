@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+    <title>Sửa Loại Trường</title>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Sửa Loại Trường</h1>
+    <form th:action="@{/loaitruongs/edit}" th:object="${loaiTruong}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="col-6 mb-3">
+            <label class="form-label" for="tenLoaiTruong">Tên Loại Trường</label><span class="text-danger">*</span>
+            <input class="form-control" type="text" placeholder="Tên Loại Trường" th:field="*{tenLoaiTruong}" id="tenLoaiTruong" required autofocus>
+            <span class="text-danger" th:if="${#fields.hasErrors('tenLoaiTruong')}" th:errors="*{tenLoaiTruong}"></span>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </form>
+    <br>
+    <a th:href="@{/loaitruongs}">Back to List</a>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

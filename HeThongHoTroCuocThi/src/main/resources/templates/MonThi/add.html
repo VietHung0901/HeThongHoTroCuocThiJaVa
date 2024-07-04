@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+    <title>Thêm Môn Thi</title>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Thêm Môn Thi</h1>
+    <form th:action="@{/monthis/add}" th:object="${monThi}" method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" for="title">Tên Môn Thi:</label><span class="text-danger">*</span>
+            <input class="form-control" type="text" placeholder="Tên Môn Thi" th:field="*{tenMonThi}" id="tenMonThi" required autofocus >
+            <span class="text-danger" th:if="${#fields.hasErrors('tenMonThi')}" th:errors="*{tenMonThi}"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </form>
+    <br>
+    <a th:href="@{/monthis}">Back to List</a>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

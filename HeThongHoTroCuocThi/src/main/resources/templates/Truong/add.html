@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Trường</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Thêm Trường</h1>
+    <form th:action="@{/truongs/add}" th:object="${truong}" method="post">
+        <div class="form-group">
+            <label for="tenTruong">Tên Trường</label>
+            <input type="text" th:field="*{tenTruong}" class="form-control" id="tenTruong" placeholder="Nhập tên trường">
+        </div>
+        <div>
+            <label class="form-label" for="loaiTruong">Loại Trường</label>
+            <span class="text-danger">*</span>
+            <select class="form-control" id="loaiTruong.id" th:field="*{loaiTruong.id}">
+                <option value="">-- Chọn Loại Trường --</option>
+                <option th:each="loaiTruong : ${allLoaiTruongs}" th:value="${loaiTruong.id}" th:text="${loaiTruong.tenLoaiTruong}"></option>
+            </select>
+            <span class="text-danger"
+                  th:if="${#fields.hasErrors('loaiTruong')}"
+                  th:errors="*{loaiTruong}"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm</button>
+    </form>
+</div>
+<script th:src="@{/js/form.js}"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

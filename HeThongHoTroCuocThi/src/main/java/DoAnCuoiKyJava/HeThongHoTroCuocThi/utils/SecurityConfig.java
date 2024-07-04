@@ -49,10 +49,10 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/",
                                 "/oauth/**", "/register", "/error")
                         .permitAll()
-                        .requestMatchers("/books/edit/**",
-                                "/books/add", "/books/delete")
+                        .requestMatchers("/monthis/edit/**",
+                                "/monthis/add")
                         .hasAnyAuthority("ADMIN")
-                        .requestMatchers("/books", "/cart", "/cart/**")
+                        .requestMatchers("/monthis", "/cart", "/cart/**")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")

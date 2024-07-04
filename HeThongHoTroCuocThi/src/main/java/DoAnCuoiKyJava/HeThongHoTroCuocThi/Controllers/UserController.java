@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/register")
     public String register(@NotNull Model model) {
         model.addAttribute("user", new UserRequest());
-        model.addAttribute("listTruong", truongService.getAllTruong());
+        model.addAttribute("listTruong", truongService.getAllTruongs());
         return "user/register";
     }
 
@@ -47,7 +47,7 @@ public class UserController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
-            model.addAttribute("listTruong", truongService.getAllTruong());
+            model.addAttribute("listTruong", truongService.getAllTruongs());
             return "user/register";
         }
 
