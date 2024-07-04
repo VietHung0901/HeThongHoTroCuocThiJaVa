@@ -16,7 +16,7 @@
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">HUTECH</a>
+            <a class="navbar-brand" href="/">MOS</a>
             <button class="navbar-toggler" type="button" data-bstoggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent"
@@ -30,21 +30,26 @@
                         <a class="nav-link active" aria-current="page"
                            href="/">Home</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
-                        <a class="nav-link" href="/books">
-                            List Book
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/LoaiTruongs">
+                            Loại trường
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/MonThis">
+                            Môn thi
                         </a>
                     </li>
                     <li class="nav-item"
                         sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a class="nav-link" href="/books/add">
-                            Add Book
+                        <a class="nav-link" href="/Truongs">
+                            Trường
                         </a>
                     </li>
                     <li class="nav-item"
                         sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a class="nav-link" href="/categories">
-                            list category
+                        <a class="nav-link" href="/CuocThis">
+                            Cuộc thi
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">

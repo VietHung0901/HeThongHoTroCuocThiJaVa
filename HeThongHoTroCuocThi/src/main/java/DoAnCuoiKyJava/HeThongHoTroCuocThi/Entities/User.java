@@ -1,6 +1,9 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Validators.annotations.ValidUsername;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +16,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.*;
-
 @Getter
 @Setter
 @ToString
@@ -33,6 +35,8 @@ public class User implements UserDetails {
     @ValidUsername
     private String username;
 
+    private String cccd;
+
     @Column(name = "password", length = 250)
     @NotBlank(message = "Password is required")
     private String password;
@@ -51,8 +55,10 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "truong_id", referencedColumnName = "id")
     @ToString.Exclude
+    @JsonBackReference
     private Truong truong;
 
+    @Column(name = "imageUrl")
     private String imageUrl;
 
     private int trangThai;
@@ -60,12 +66,12 @@ public class User implements UserDetails {
     @Column(name = "provider", length = 50)
     private String provider;
 
-
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> userRoles = this.getRoles();

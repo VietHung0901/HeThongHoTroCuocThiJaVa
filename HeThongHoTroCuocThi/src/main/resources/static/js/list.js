@@ -1,38 +1,36 @@
-$(document).ready(function() {
-    $.ajax({
-        url: 'http://localhost:8080/api/v1/books',
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            let trHTML = '';
-            $.each(data, function(i, item) {
-                trHTML = trHTML +  '<tr id="book-' + item.id + '">' +
-                    '<td>' + item.id + '</td>' +
-                    '<td>' + item.title + '</td>' +
-                    '<td>' + item.author + '</td>' +
-                    '<td>' + item.price + '</td>' +
-                    '<td>' + item.categoryName + '</td>' +
-                    '<td sec:authorize="hasAnyAuthority(\'ADMIN\')">' +
-                    '<a href="#" data-id="' + item.id + '" class="text-primary">Edit</a> | ' +
-                    '<a href="/books"' + item.id + ' class="text-danger" onclick="apiDeleteBook(' + item.id + ', this); return false;" sec:authorize="hasAnyAuthority(\'ADMIN\')">Delete</a>' +
-                    '</td>' +
-                    '</tr>';
-            });
-            $('#book-table-body').append(trHTML);
-        }
-    });
-});
+// Lắng nghe sự kiện click trên nút "Xác nhận"
+document.getElementById('confirmInfoButton').addEventListener('click', function() {
+    // Lấy giá trị CCCD từ trường input
+    var cccd = document.getElementById('cccd').value;
 
-
-function apiDeleteBook(id) {
-    if (confirm('Are you sure you want to delete this book?')) {
-        $.ajax({
-            url: 'http://localhost:8080/api/v1/books/' + id,
-            type: 'DELETE',
-            success: function() {
-                alert('Book deleted successfully!');
-                $('#book-' + id).remove();
-            }
-        });
+    // Kiểm tra xem trường CCCD có được điền hay không
+    if (cccd.trim() === '') {
+        // Nếu trường CCCD trống, hiển thị thông báo
+        alert("Vui lòng nhập CCCD.");
+        return;
     }
-}
+
+    // Gọi API để lấy thông tin người dùng
+    fetch('/User/id/' + cccd)
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý dữ liệu trả về
+            console.log(data);
+            // Ví dụ: hiển thị thông tin người dùng
+            document.getElementById('userId').value = data.id;
+            document.getElementById('username').value = data.username;
+            document.getElementById('sdt').value = data.phone;
+            document.getElementById('email').value = data.email;
+            document.getElementById('truongId').value = data.truongId;
+            document.getElementById('truongName').value = data.truongName;
+
+            // Cập nhật ảnh
+            var imageElement = document.getElementById('imageUrl');
+            imageElement.src = data.imageUrl;
+            imageElement.style.display = 'block'; // Hiển thị ảnh
+        })
+        .catch(error => {
+            // Xử lý lỗi
+            alert('Lỗi khi xác nhận thông tin');
+        });
+});

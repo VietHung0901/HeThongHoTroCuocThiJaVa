@@ -36,6 +36,11 @@
                                    required id="username" th:field="*{username}" placeholder="Enter your username">
                         </div>
                         <div class="form-group mb-4">
+                            <label for="cccd"></label>
+                            <input type="text" class="form-control"
+                                   required id="cccd" th:field="*{cccd}" placeholder="Enter your id card">
+                        </div>
+                        <div class="form-group mb-4">
                             <label for="password"></label>
                             <input type="password" class="form-control"
                                    required id="password" th:field="*{password}" placeholder="Enter your password">
@@ -54,8 +59,8 @@
                             <label for="truong"></label>
                             <select class="form-control" id="truong" th:field="*{truong}">
                                 <option value="">-- Chose school --</option>
-                                <option th:each="t : ${listTruong}" th:value="${t.id}"
-                                        th:text="${t.tenTruong}"></option>
+                                <option th:each="truong : ${listTruong}" th:value="${truong.id}"
+                                        th:text="${truong.tenTruong}"></option>
                             </select>
                         </div>
                         <div class="d-grid gap-2 form-action">

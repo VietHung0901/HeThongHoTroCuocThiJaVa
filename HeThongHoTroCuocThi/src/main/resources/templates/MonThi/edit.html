@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Loại Trường</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container mt-5">
+    <h1>Edit Loại Trường</h1>
+    <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+    <form th:action="@{/MonThis/edit}" method="post" th:object="${monThi}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="tenMonThi">Tên Loại Trường</label>
+            <input type="text" class="form-control" id="tenMonThi" th:field="*{tenMonThi}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+        <a th:href="@{/MonThis}" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</body>
+</html>

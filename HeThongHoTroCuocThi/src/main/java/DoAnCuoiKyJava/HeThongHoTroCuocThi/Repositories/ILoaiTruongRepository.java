@@ -1,13 +1,15 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ITruongRepository extends JpaRepository<Truong, Long> {
+public interface ILoaiTruongRepository  extends JpaRepository<LoaiTruong, Long>{
+    LoaiTruong findLoaiTruongById(Long id);
+
     //Xuất các loại trường đang không bị ẩn
-    List<Truong> findByTrangThai(int trangThai);
+    List<LoaiTruong> findByTrangThai(int trangThai);
 }
