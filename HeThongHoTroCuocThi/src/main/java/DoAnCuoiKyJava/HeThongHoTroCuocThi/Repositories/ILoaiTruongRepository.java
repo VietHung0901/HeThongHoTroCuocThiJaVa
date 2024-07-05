@@ -12,4 +12,6 @@ public interface ILoaiTruongRepository  extends JpaRepository<LoaiTruong, Long>{
 
     //Xuất các loại trường đang không bị ẩn
     List<LoaiTruong> findByTrangThai(int trangThai);
+
+
 }

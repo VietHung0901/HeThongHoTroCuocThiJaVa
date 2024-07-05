@@ -24,17 +24,22 @@ public class CuocThiController {
     private final QuyDinhService quyDinhService;
     private final ChiTietNoiDungService CTNDService;
     private final ChiTietQuyDinhService CTQDService;
-
+    private final LoaiTruongService loaiTruongService;
+    private final PhieuDangKyService phieuDangKyService;
 
     @GetMapping
     public String showAllCuocThi(@NotNull Model model) {
         model.addAttribute("cuocThis", cuocThiService.getAllCuocThis());
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        model.addAttribute("phieuDangKyService", phieuDangKyService);
         return "CuocThi/list";
     }
 
     @GetMapping("/User")
     public String showAllCuocThiUser(@NotNull Model model) {
         model.addAttribute("cuocThis", cuocThiService.getAllCuocThisHien());
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        model.addAttribute("phieuDangKyService", phieuDangKyService);
         return "CuocThi/listUser";
     }
 
@@ -44,6 +49,7 @@ public class CuocThiController {
         model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
         model.addAttribute("allQuyDinhs", quyDinhService.getAllQuyDinhsHien());
         model.addAttribute("allNoiDungs", noiDungService.getAllNoiDungsHien());
+        model.addAttribute("listLoaiTruong",loaiTruongService.getAllLoaiTruongsHien());
         return "CuocThi/add";
     }
 
@@ -63,6 +69,7 @@ public class CuocThiController {
             model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
             model.addAttribute("allQuyDinhs", quyDinhService.getAllQuyDinhsHien());
             model.addAttribute("allNoiDungs", noiDungService.getAllNoiDungsHien());
+            model.addAttribute("listLoaiTruong",loaiTruongService.getAllLoaiTruongsHien());
             return "CuocThi/add";
         }
 

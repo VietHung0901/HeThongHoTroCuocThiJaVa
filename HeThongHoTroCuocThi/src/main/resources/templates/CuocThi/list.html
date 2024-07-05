@@ -24,6 +24,7 @@
             <th>Số lượng</th>
             <th>Địa điểm</th>
             <th>Môn thi</th>
+            <th>Cấp thi</th>
             <th>Thao tác</th>
         </tr>
         </thead>
@@ -32,9 +33,10 @@
             <td th:text="${cuocThi.id}"></td>
             <td th:text="${cuocThi.tenCuocThi}"></td>
             <td th:text="${cuocThi.ngayThi}"></td>
-            <td th:text="${cuocThi.soLuongThiSinh}"></td>
+            <td th:text="${phieuDangKyService.countPhieuDangKyByCuocThiId(cuocThi.id)} + '/' + ${cuocThi.soLuongThiSinh}"></td>
             <td th:text="${cuocThi.diaDiemThi}"></td>
             <td th:text="${cuocThi.monThi.tenMonThi}"></td>
+            <td th:text="${loaiTruongService.getNameById(cuocThi.loaiTruongId)}"></td>
             <td>
                 <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary btn-sm"
                    th:href="@{/CuocThis/edit/{id}(id=${cuocThi.id})}">Sửa</a>

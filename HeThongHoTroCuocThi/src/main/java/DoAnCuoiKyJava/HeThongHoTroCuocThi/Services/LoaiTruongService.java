@@ -45,4 +45,12 @@ public class LoaiTruongService {
         loaiTruongRepository.save(loaiTruong);
     }
 
+    public String getNameById(Long id) {
+        LoaiTruong loaiTruong = loaiTruongRepository.findLoaiTruongById(id);
+        if (loaiTruong != null) {
+            return loaiTruong.getTenLoaiTruong();
+        } else {
+            return "null";
+        }
+    }
 }

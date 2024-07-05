@@ -54,6 +54,7 @@
                                 <button type="button" class="btn btn-primary" id="confirmInfoButton">Xác nhận</button>
                             </div>
                         </div>
+                        <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}"></div>
                     </div>
                     <h2 class="mb-4">XÁC NHẬN THÔNG TIN</h2>
                     <div class="form-group">
@@ -66,8 +67,9 @@
 
                     <!--Form xác nhận thông tin đăng ký-->
                     <form th:action="@{/PhieuDangKys/add}" th:object="${phieuDangKy}" method="post">
-                        <input id="userId" type="hidden" th:field="*{userId}">
-                        <input type="hidden" class="form-control" id="cuocThi" th:field="*{cuocThi}">
+
+                        <input type="hidden" id="userId"  th:field="*{userId}">
+                        <input type="hidden" id="cuocThi" th:field="*{cuocThi}">
                         <div class="form-group">
                             <label for="sdt" class="form-label">Số điện thoại</label>
                             <input type="text" class="form-control" id="sdt" th:field="*{sdt}" required readonly>

@@ -34,6 +34,8 @@ public class CuocThi {
 
     private String diaDiemThi;
 
+    private Long loaiTruongId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monThi_id", referencedColumnName = "id")
     @ToString.Exclude

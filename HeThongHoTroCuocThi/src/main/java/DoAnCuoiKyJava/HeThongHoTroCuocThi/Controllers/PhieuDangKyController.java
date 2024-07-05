@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 public class PhieuDangKyController {
     private final PhieuDangKyService phieuDangKyService;
     private final CuocThiService cuocThiService;
-    private final UserService userService;
+
 
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
@@ -56,21 +56,54 @@ public class PhieuDangKyController {
                     .stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
-            model.addAttribute("errors", errors);
+            model.addAttribute("errorMessage", errors);
+
+            CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
+            phieuDangKyCreate.setCuocThi(cuocThi);
+            model.addAttribute("phieuDangKy", phieuDangKyCreate);
+            model.addAttribute("cuocThi", cuocThi);
             return "PhieuDangKy/add";
         }
 
-        PhieuDangKy phieuDangKy = new PhieuDangKy();
-        phieuDangKy.setNgayDangKy(phieuDangKyCreate.getNgayDangKy());
-        phieuDangKy.setCuocThi(phieuDangKyCreate.getCuocThi());
-        phieuDangKy.setSdt(phieuDangKyCreate.getSdt());
-        phieuDangKy.setEmail(phieuDangKyCreate.getEmail());
-        phieuDangKy.setTruongId(phieuDangKyCreate.getTruongId());
-        phieuDangKy.setNgayDangKy(LocalDateTime.now());
+        // Kiểm tra các trường không được null
+        if (phieuDangKyCreate.getUserId() == null
+                || phieuDangKyCreate.getSdt() == null
+                || phieuDangKyCreate.getEmail() == null
+                || phieuDangKyCreate.getTruongId() == null) {
+            model.addAttribute("errorMessage", "Vui lòng xác nhận thông tin");
+            CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
+            phieuDangKyCreate.setCuocThi(cuocThi);
+            model.addAttribute("phieuDangKy", phieuDangKyCreate);
+            model.addAttribute("cuocThi", cuocThi);
+            return "PhieuDangKy/add";
+        }
 
-        User user = userService.findById(phieuDangKyCreate.getUserId());
-        phieuDangKy.setUser(user);
+        // Kiểm tra xem số lượng thí sinh đã đạt mức tối đa chưa
+        int soLuongThiSinhHienTai = phieuDangKyService.countPhieuDangKyByCuocThiId(phieuDangKyCreate.getCuocThi().getId());
+        if (soLuongThiSinhHienTai >= phieuDangKyCreate.getCuocThi().getSoLuongThiSinh()) {
+            model.addAttribute("errorMessage", "Số lượng thí sinh tối đa cho cuộc thi này đã đạt.");
+            CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
+            phieuDangKyCreate.setCuocThi(cuocThi);
+            model.addAttribute("phieuDangKy", phieuDangKyCreate);
+            model.addAttribute("cuocThi", cuocThi);
+            return "PhieuDangKy/add";
+        }
 
+        // Kiểm tra xem người dùng đã đăng ký cuộc thi này chưa
+        if (phieuDangKyService.tonTaiPhieuDangKyUserId_CuocThiId(phieuDangKyCreate.getUserId(), phieuDangKyCreate.getCuocThi().getId())) {
+            model.addAttribute("errorMessage", "Bạn đã đăng ký cho cuộc thi này rồi.");
+            CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
+            phieuDangKyCreate.setCuocThi(cuocThi);
+            model.addAttribute("phieuDangKy", phieuDangKyCreate);
+            model.addAttribute("cuocThi", cuocThi);
+            return "PhieuDangKy/add";
+        }
+
+        PhieuDangKy phieuDangKy = phieuDangKyService.mapToPhieuDangKy(phieuDangKyCreate);
         phieuDangKyService.addPhieuDangKy(phieuDangKy);
         return "redirect:/PhieuDangKys";
     }
