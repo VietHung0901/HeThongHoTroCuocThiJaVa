@@ -62,8 +62,13 @@
                             Môn thi
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
                         <a class="nav-link" href="/CuocThis">
+                            Cuộc thi
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/CuocThis/User">
                             Cuộc thi
                         </a>
                     </li>

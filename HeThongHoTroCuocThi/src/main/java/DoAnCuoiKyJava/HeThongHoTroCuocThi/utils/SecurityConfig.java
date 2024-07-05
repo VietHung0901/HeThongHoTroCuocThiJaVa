@@ -47,9 +47,9 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/",
-                                "/oauth/**", "/register", "/error","/CuocThis")
+                                "/oauth/**", "/register", "/error","/CuocThis/User")
                         .permitAll()
-                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis").hasAnyAuthority("ADMIN")
                         .requestMatchers("/PhieuDangKys").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()

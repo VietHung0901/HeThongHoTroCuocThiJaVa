@@ -18,7 +18,7 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             console.log(data);
             // Ví dụ: hiển thị thông tin người dùng
             document.getElementById('userId').value = data.id;
-            document.getElementById('username').value = data.username;
+            document.getElementById('hoten').value = data.hoten;
             document.getElementById('sdt').value = data.phone;
             document.getElementById('email').value = data.email;
             document.getElementById('truongId').value = data.truongId;
@@ -33,7 +33,7 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             // Xử lý lỗi
             alert('Không tìm thấy thông tin cần xác nhận');
             document.getElementById('userId').value = '';
-            document.getElementById('username').value = '';
+            document.getElementById('hoten').value = '';
             document.getElementById('sdt').value = '';
             document.getElementById('email').value = '';
             document.getElementById('truongId').value = '';

@@ -2,13 +2,14 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ICuocThiRepository;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ITruongRepository;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.CuocThiCreateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class CuocThiService {
     public Optional<CuocThi> getCuocThiById(Long id) {
         return cuocThiRepository.findById(id);
     }
+
     public CuocThi addCuocThi(CuocThi cuocThi) {
         cuocThi.setTrangThai(1);
         return cuocThiRepository.save(cuocThi);
@@ -48,5 +50,15 @@ public class CuocThiService {
 
         cuocThi.setTrangThai(cuocThi.getTrangThai() == 0 ? 1 : 0);
         cuocThiRepository.save(cuocThi);
+    }
+
+    private CuocThi mapToCuocThi(CuocThiCreateRequest cuocThiRequest) {
+        CuocThi cuocThi = new CuocThi();
+        cuocThi.setTenCuocThi(cuocThiRequest.getTenCuocThi());
+        cuocThi.setNgayThi(cuocThiRequest.getNgayThi());
+        cuocThi.setSoLuongThiSinh(cuocThiRequest.getSoLuong());
+        cuocThi.setDiaDiemThi(cuocThiRequest.getDiaDiemThi());
+        cuocThi.setMonThi(cuocThiRequest.getMonThi());
+        return cuocThi;
     }
 }

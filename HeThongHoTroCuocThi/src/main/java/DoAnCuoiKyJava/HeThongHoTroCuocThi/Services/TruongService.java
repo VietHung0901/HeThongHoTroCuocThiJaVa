@@ -1,6 +1,5 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ITruongRepository;
 import jakarta.persistence.EntityNotFoundException;

@@ -28,7 +28,7 @@
             <td>
                 <a class="btn btn-primary btn-sm" th:href="@{/LoaiTruongs/edit/{id}(id=${loaiTruong.id})}">Sửa</a>
                 <a class="btn btn-danger btn-sm" th:href="@{/LoaiTruongs/AnHien/{id}(id=${loaiTruong.id})}"
-                   th:text="${loaiTruong.trangThai == 1 ? 'Ẩn' : 'Hiện'}"></a>
+                   th:text="${loaiTruong.trangThai == 1 ? 'Hiện' : 'Ẩn'}"></a>
             </td>
         </tr>
         </tbody>
