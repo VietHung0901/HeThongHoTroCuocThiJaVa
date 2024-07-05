@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add LoaiTruong</title>
+    <title>TẠO CUỘC THI</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
-    <h1 class="my-4">Add CuocThi</h1>
+    <h1 class="my-4">TẠO CUỘC THI</h1>
     <form th:action="@{/CuocThis/add}" th:object="${cuocThi}" method="post">
         <div class="form-group">
-            <label for="tenCuocThi">Tên Loại Trường</label>
+            <label for="tenCuocThi">Tên cuộc thi</label>
             <input type="text" class="form-control" id="tenCuocThi" th:field="*{tenCuocThi}" required>
         </div>
         <div class="form-group">
-            <label for="ngayThi">Ngày thi</label>
+            <label for="ngayThi">Thời gian tổ chức</label>
             <input type="datetime-local" class="form-control" id="ngayThi" th:field="*{ngayThi}" required>
         </div>
         <div class="form-group">
-            <label for="soLuongThiSinh">soLuongThiSinh</label>
+            <label for="soLuongThiSinh">Số lượng thí sinh</label>
             <input type="number" class="form-control" id="soLuongThiSinh" th:field="*{soLuongThiSinh}" required>
         </div>
         <div class="form-group">
-            <label for="DiaDiemThi">diaDiemThi</label>
+            <label for="DiaDiemThi">Địa điểm tổ chức</label>
             <input type="text" class="form-control" id="DiaDiemThi" th:field="*{diaDiemThi}" required>
         </div>
         <div class="form-group">
-            <label for="monThi"></label>
+            <label for="monThi">Môn thi</label>
             <select class="form-control" id="monThi" th:field="*{monThi}">
-                <option value="">-- Chose school --</option>
+                <option value="">-- Chọn môn thi --</option>
                 <option th:each="monThi : ${listMonThi}" th:value="${monThi.id}"
                         th:text="${monThi.tenMonThi}"></option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a th:href="@{/loaitruong}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a th:href="@{/CuocThis}" class="btn btn-secondary">Trở về</a>
     </form>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

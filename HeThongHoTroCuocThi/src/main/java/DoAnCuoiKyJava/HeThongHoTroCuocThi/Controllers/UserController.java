@@ -54,6 +54,7 @@ public class UserController {
         String image = userService.saveImage(userRequest.getImageUrl());
         User user = new User();
         user.setUsername(userRequest.getUsername());
+        user.setHoten(userRequest.getHoten());
         user.setCccd(userRequest.getCccd());
         user.setPassword(userRequest.getPassword());
         user.setPhone(userRequest.getPhone());

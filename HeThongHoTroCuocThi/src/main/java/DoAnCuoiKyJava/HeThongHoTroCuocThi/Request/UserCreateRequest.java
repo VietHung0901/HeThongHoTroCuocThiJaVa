@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserCreateRequest {
     private Long id;
     private String username;
+    private String hoten;
     private String cccd;
     private String password;
     private String email;

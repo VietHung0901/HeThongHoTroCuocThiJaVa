@@ -31,7 +31,18 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0">Đăng ký</h4>
+                    <h4 class="mb-0">THÔNG TIN CUỘC THI</h4>
+                </div>
+                <div class="card-body">
+                    <p>Tên cuộc thi: <span th:text="${cuocThi.tenCuocThi}"></span></p>
+                    <p>Môn thi: <span th:text="${cuocThi.monThi.getTenMonThi()}"></span></p>
+                    <p>Thời gian: <span th:text="${cuocThi.ngayThi}"></span></p>
+                    <p>Địa điểm: <span th:text="${cuocThi.diaDiemThi}"></span></p>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4 class="mb-0">PHIẾU ĐĂNG KÝ</h4>
                 </div>
                 <div class="card-body">
                     <!--    Xác nhận thông tin-->
@@ -56,6 +67,7 @@
                     <!--Form xác nhận thông tin đăng ký-->
                     <form th:action="@{/PhieuDangKys/add}" th:object="${phieuDangKy}" method="post">
                         <input id="userId" type="hidden" th:field="*{userId}">
+                        <input type="hidden" class="form-control" id="cuocThi" th:field="*{cuocThi}">
                         <div class="form-group">
                             <label for="sdt" class="form-label">Số điện thoại</label>
                             <input type="text" class="form-control" id="sdt" th:field="*{sdt}" required readonly>
@@ -71,29 +83,15 @@
                                 <input type="text" class="form-control" id="truongName" required readonly>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="cuocThi">Cuộc thi</label>
-                            <input type="text" class="form-control" id="cuocThi" th:field="*{cuocThi}" required readonly>
-                        </div>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Đăng ký</button>
                     </form>
                 </div>
             </div>
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h4 class="mb-0">THÔNG TIN CUỘC THI</h4>
-                </div>
-                <div class="card-body">
-                    <p>Tên cuộc thi: <span th:text="${cuocThi.tenCuocThi}"></span></p>
-                    <p>Môn thi: <span th:text="${cuocThi.monThi.getTenMonThi()}"></span></p>
-                    <p>Thời gian: <span th:text="${cuocThi.ngayThi}"></span></p>
-                    <p>Địa điểm: <span th:text="${cuocThi.diaDiemThi}"></span></p>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
-
-<script th:src="@{/js/list.js}"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
+<script th:src="@{/js/PhieuDangKy.js}"></script>
 </body>
 </html>

@@ -47,10 +47,10 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/",
-                                "/oauth/**", "/register", "/error")
+                                "/oauth/**", "/register", "/error","/CuocThis")
                         .permitAll()
                         .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/books", "/cart", "/cart/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
+                        .requestMatchers("/PhieuDangKys").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()
                 ).logout(logout -> logout

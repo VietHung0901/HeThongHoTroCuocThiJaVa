@@ -35,6 +35,8 @@ public class User implements UserDetails {
     @ValidUsername
     private String username;
 
+    private String hoten;
+
     private String cccd;
 
     @Column(name = "password", length = 250)

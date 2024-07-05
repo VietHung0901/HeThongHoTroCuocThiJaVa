@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add LoaiTruong</title>
+    <title>THÊM LOẠI TRƯỜNG</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
-    <h1 class="my-4">Add LoaiTruong</h1>
-
+    <h1 class="my-4">THÊM LOẠI TRƯỜNG</h1>
     <form th:action="@{/LoaiTruongs/add}" th:object="${loaiTruong}" method="post">
         <div class="form-group">
             <label for="tenLoaiTruong">Tên Loại Trường</label>
             <input type="text" class="form-control" id="tenLoaiTruong" th:field="*{tenLoaiTruong}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a th:href="@{/loaitruong}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a th:href="@{/LoaiTruongs}" class="btn btn-secondary">Trở về</a>
     </form>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

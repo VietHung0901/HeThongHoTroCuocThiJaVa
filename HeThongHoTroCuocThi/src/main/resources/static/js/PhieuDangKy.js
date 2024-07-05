@@ -31,6 +31,12 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
         })
         .catch(error => {
             // Xử lý lỗi
-            alert('Lỗi khi xác nhận thông tin');
+            alert('Không tìm thấy thông tin cần xác nhận');
+            document.getElementById('userId').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('sdt').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('truongId').value = '';
+            document.getElementById('truongName').value = '';
         });
 });
