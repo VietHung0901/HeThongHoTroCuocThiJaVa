@@ -52,6 +52,28 @@
                             Cart
                         </a>
                     </li>
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN','USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/noidungs/add">
+                            Add Noi Dung
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/noidungs">
+                            List Noi Dung
+                        </a>
+                    </li>
+                    <li class="nav-item"
+                        sec:authorize="hasAnyAuthority('ADMIN','USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/quydinhs/add">
+                            Add Quy Dinh
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/quydinhs">
+                            List Quy Dinh
+                        </a>
+                    </li>
                     <li sec:authorize="isAuthenticated()">
                         <span th:text="${#authentication.getName()}"></span>
                         <form th:action="@{/logout}" method="post">

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Nội Dung</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-light">
+                <div class="container-fluid">
+                    <h1>Danh sách Nội Dung</h1>
+                    <form class="d-flex" th:action="@{/noidungs/search}" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="keyword">
+                        <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th><a th:href="@{/noidungs(pageNo=${currentPage}, sortBy='id')}">Id</a></th>
+            <th>Tên Nội Dung</th>
+            <th>Ảnh</th>
+            <th>Trạng Thái</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="noiDung : ${noidungs}">
+            <td th:text="${noiDung.getId()}"></td>
+            <td th:text="${noiDung.getTenNoiDung()}"></td>
+            <td><img th:src="@{${noiDung.getImageUrl()}}" width="100px" height="100px" alt="Ảnh bị lỗi"></td>
+            <td th:text="${noiDung.getTrangThai()}"></td>
+            <td colspan="2">
+<!--                <a class="btn btn-primary" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/noidungs/edit/{id}(id=${noiDung.getId()})}">Edit</a>-->
+<!--                <a class="btn btn-danger" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/noidungs/delete/{id}(id=${noiDung.getId()})}" onclick="return confirm('Bạn có chắc chắn muốn xóa nội dung này không?')">Delete</a>-->
+<!--               -->
+                <a class="btn btn-primary"  th:href="@{/noidungs/edit/{id}(id=${noiDung.getId()})}">Edit</a>
+                <a class="btn btn-danger" th:href="@{/noidungs/delete/{id}(id=${noiDung.getId()})}" onclick="return confirm('Bạn có chắc chắn muốn xóa nội dung này không?')">Delete</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center pagination-sm" th:each="i : ${#numbers.sequence(0, totalPages)}">
+        <li class="page-item" th:classappend="${currentPage == i} ? 'active'">
+            <a class="page-link" th:href="@{/noidungs(pageNo=${i})}" th:text="${i}"></a>
+        </li>
+    </ul>
+</nav>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>
