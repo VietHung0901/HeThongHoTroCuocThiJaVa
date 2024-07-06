@@ -2,7 +2,6 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.LoaiTruongService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -11,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 @Controller
 @RequestMapping("/LoaiTruongs")
 @RequiredArgsConstructor

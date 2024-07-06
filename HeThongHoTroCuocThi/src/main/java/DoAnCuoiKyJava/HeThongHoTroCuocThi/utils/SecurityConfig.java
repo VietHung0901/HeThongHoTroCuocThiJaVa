@@ -49,8 +49,10 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/",
                                 "/oauth/**", "/register", "/error","/CuocThis/User")
                         .permitAll()
-                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/PhieuDangKys").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
+                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs")
+                        .hasAnyAuthority("ADMIN")
+                        .requestMatchers("/PhieuDangKys")
+                        .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()
                 ).logout(logout -> logout

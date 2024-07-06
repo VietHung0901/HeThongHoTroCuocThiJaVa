@@ -24,6 +24,8 @@ public class NoiDung {
     @Column(name = "tenNoiDung", length = 50, nullable = false)
     private String tenNoiDung;
 
+    private String moTaNoiDung;
+
     private String imageUrl;
 
     @OneToMany(mappedBy = "noiDung", cascade = CascadeType.ALL)
