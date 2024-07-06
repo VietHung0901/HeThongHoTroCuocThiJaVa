@@ -10,4 +10,5 @@ import java.util.List;
 public interface ITruongRepository extends JpaRepository<Truong, Long> {
     //Xuất các loại trường đang không bị ẩn
     List<Truong> findByTrangThai(int trangThai);
+
 }

@@ -50,8 +50,7 @@ public class LoaiTruongController {
 
     @GetMapping("/edit/{id}")
     public String editLoaiTruong(@PathVariable Long id, Model model) {
-        LoaiTruong loaiTruong = loaiTruongService.getLoaiTruongById(id)
-                .orElseThrow(() -> new EntityNotFoundException("LoaiTruong not found with id: " + id));
+        LoaiTruong loaiTruong = loaiTruongService.getLoaiTruongById(id);
         model.addAttribute("loaiTruong", loaiTruong);
         return "LoaiTruong/edit";
     }

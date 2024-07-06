@@ -1,5 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ITruongRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +26,7 @@ public class TruongService {
     public Optional<Truong> getTruongById(Long id) {
         return truongRepository.findById(id);
     }
+
     public Truong addTruong(Truong truong) {
         truong.setTrangThai(1);
         return truongRepository.save(truong);
@@ -45,4 +47,5 @@ public class TruongService {
         truong.setTrangThai(truong.getTrangThai() == 0 ? 1 : 0);
         truongRepository.save(truong);
     }
+
 }

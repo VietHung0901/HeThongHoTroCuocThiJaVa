@@ -24,6 +24,7 @@
                         th:text="${loaiTruong.tenLoaiTruong}"></option>
             </select>
         </div>
+        <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}" style="margin-top: 20px; margin-bottom: 20px;"></div>
         <button type="submit" class="btn btn-primary">Tạo</button>
         <a th:href="@{/Truongs}" class="btn btn-secondary">Trở về</a>
     </form>

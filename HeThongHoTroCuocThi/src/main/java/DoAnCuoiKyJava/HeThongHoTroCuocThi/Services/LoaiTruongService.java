@@ -21,8 +21,8 @@ public class LoaiTruongService {
         return loaiTruongRepository.findByTrangThai(1);
     }
 
-    public Optional<LoaiTruong> getLoaiTruongById(Long id) {
-        return loaiTruongRepository.findById(id);
+    public LoaiTruong getLoaiTruongById(Long id) {
+        return loaiTruongRepository.findLoaiTruongById(id);
     }
 
     public LoaiTruong addLoaiTruong(LoaiTruong loaiTruong) {
@@ -31,8 +31,7 @@ public class LoaiTruongService {
     }
 
     public LoaiTruong updateLoaiTruong(LoaiTruong updatedLoaiTruong) {
-        LoaiTruong loaiTruong = getLoaiTruongById(updatedLoaiTruong.getId())
-                .orElseThrow(() -> new EntityNotFoundException("LoaiTruong not found with id"));
+        LoaiTruong loaiTruong = getLoaiTruongById(updatedLoaiTruong.getId());
         loaiTruong.setTenLoaiTruong(updatedLoaiTruong.getTenLoaiTruong());
         return loaiTruongRepository.save(loaiTruong);
     }

@@ -36,6 +36,7 @@
                 <div class="card-body">
                     <p>Tên cuộc thi: <span th:text="${cuocThi.tenCuocThi}"></span></p>
                     <p>Môn thi: <span th:text="${cuocThi.monThi.getTenMonThi()}"></span></p>
+                    <p>Cấp thi: <span th:text="${loaiTruongService.getLoaiTruongById(cuocThi.loaiTruongId).getTenLoaiTruong()}"></span></p>
                     <p>Thời gian: <span th:text="${cuocThi.ngayThi}"></span></p>
                     <p>Địa điểm: <span th:text="${cuocThi.diaDiemThi}"></span></p>
                 </div>
@@ -54,7 +55,7 @@
                                 <button type="button" class="btn btn-primary" id="confirmInfoButton">Xác nhận</button>
                             </div>
                         </div>
-                        <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}"></div>
+                        <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}" style="margin-top: 20px; margin-bottom: 20px;"></div>
                     </div>
                     <h2 class="mb-4">XÁC NHẬN THÔNG TIN</h2>
                     <div class="form-group">

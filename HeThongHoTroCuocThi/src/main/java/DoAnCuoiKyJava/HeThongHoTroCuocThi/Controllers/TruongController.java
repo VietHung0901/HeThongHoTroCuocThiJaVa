@@ -53,6 +53,13 @@ public class TruongController {
             model.addAttribute("errors", errors);
             return "Truong/add";
         }
+
+        if(truong.getLoaiTruong() == null)
+        {
+            model.addAttribute("errorMessage", "Chọn loại trường cho trường.");
+            model.addAttribute("listLoaiTruong",loaiTruongService.getAllLoaiTruongsHien());
+            return "Truong/add";
+        }
         truongService.addTruong(truong);
         return "redirect:/Truongs";
     }

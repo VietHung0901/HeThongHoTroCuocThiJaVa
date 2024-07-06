@@ -1,25 +1,17 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.PhieuDangKyCreate;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.CuocThiService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuDangKyService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Viewmodels.UserGetVM;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,11 +19,14 @@ import java.time.LocalDateTime;
 public class PhieuDangKyController {
     private final PhieuDangKyService phieuDangKyService;
     private final CuocThiService cuocThiService;
-
+    private final UserService userService;
+    private final TruongService truongService;
+    private final LoaiTruongService loaiTruongService;
 
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
         model.addAttribute("phieuDangKys", phieuDangKyService.getAllPhieuDangKystheoCuocThi(id));
+
         return "PhieuDangKy/list";
     }
 
@@ -43,6 +38,7 @@ public class PhieuDangKyController {
         phieuDangKy.setCuocThi(cuocThi);
         model.addAttribute("phieuDangKy", phieuDangKy);
         model.addAttribute("cuocThi", cuocThi);
+        model.addAttribute("loaiTruongService", loaiTruongService);
         return "PhieuDangKy/add";
     }
 
@@ -63,10 +59,11 @@ public class PhieuDangKyController {
             phieuDangKyCreate.setCuocThi(cuocThi);
             model.addAttribute("phieuDangKy", phieuDangKyCreate);
             model.addAttribute("cuocThi", cuocThi);
+            model.addAttribute("loaiTruongService", loaiTruongService);
             return "PhieuDangKy/add";
         }
 
-        // Kiểm tra các trường không được null
+        // Kiểm tra các dữ liệu đầu vào không được null
         if (phieuDangKyCreate.getUserId() == null
                 || phieuDangKyCreate.getSdt() == null
                 || phieuDangKyCreate.getEmail() == null
@@ -77,6 +74,7 @@ public class PhieuDangKyController {
             phieuDangKyCreate.setCuocThi(cuocThi);
             model.addAttribute("phieuDangKy", phieuDangKyCreate);
             model.addAttribute("cuocThi", cuocThi);
+            model.addAttribute("loaiTruongService", loaiTruongService);
             return "PhieuDangKy/add";
         }
 
@@ -89,6 +87,23 @@ public class PhieuDangKyController {
             phieuDangKyCreate.setCuocThi(cuocThi);
             model.addAttribute("phieuDangKy", phieuDangKyCreate);
             model.addAttribute("cuocThi", cuocThi);
+            model.addAttribute("loaiTruongService", loaiTruongService);
+            return "PhieuDangKy/add";
+        }
+
+        //Kiểm tra cấp học của người dùng có phù hợp với cuộc thi
+        User user = userService.findById(phieuDangKyCreate.getUserId());
+        Truong truongUser = truongService.getTruongById(user.getTruong().getId())
+                .orElseThrow(() -> new EntityNotFoundException(""));
+        if(truongUser.getLoaiTruong().getId() != phieuDangKyCreate.getCuocThi().getLoaiTruongId())
+        {
+            model.addAttribute("errorMessage", "Cuộc thi không dành cho cấp học của bạn");
+            CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
+            phieuDangKyCreate.setCuocThi(cuocThi);
+            model.addAttribute("phieuDangKy", phieuDangKyCreate);
+            model.addAttribute("cuocThi", cuocThi);
+            model.addAttribute("loaiTruongService", loaiTruongService);
             return "PhieuDangKy/add";
         }
 
@@ -100,6 +115,7 @@ public class PhieuDangKyController {
             phieuDangKyCreate.setCuocThi(cuocThi);
             model.addAttribute("phieuDangKy", phieuDangKyCreate);
             model.addAttribute("cuocThi", cuocThi);
+            model.addAttribute("loaiTruongService", loaiTruongService);
             return "PhieuDangKy/add";
         }
 
