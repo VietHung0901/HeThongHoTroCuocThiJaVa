@@ -41,7 +41,7 @@
                 <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-danger btn-sm"
                    th:href="@{/CuocThis/AnHien/{id}(id=${cuocThi.id})}"
                    th:text="${cuocThi.trangThai == 1 ? 'Hiện' : 'Ẩn'}"></a>
-                <a class="btn btn-primary btn-sm" th:href="@{/PhieuDangKys/add/id/{id}(id=${cuocThi.id})}">Đăng ký</a>
+                <a class="btn btn-info btn-sm" th:href="@{/CuocThis/details/{id}(id=${cuocThi.id})}">Xem</a>
             </td>
         </tr>
         </tbody>

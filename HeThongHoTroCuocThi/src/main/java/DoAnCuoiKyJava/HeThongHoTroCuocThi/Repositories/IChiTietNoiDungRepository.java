@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface IChiTietNoiDungRepository extends JpaRepository<ChiTietNoiDung, Long>{
+    // moi vua them vao
+    List<ChiTietNoiDung> findByCuocThiId(Long cuocThiId);
 }

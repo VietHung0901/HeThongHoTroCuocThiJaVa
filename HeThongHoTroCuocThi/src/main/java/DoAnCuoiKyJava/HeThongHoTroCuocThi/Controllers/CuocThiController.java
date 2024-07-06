@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +42,7 @@ public class CuocThiController {
     @GetMapping("/add")
     public String addCuocThiForm(@NotNull Model model) {
         model.addAttribute("cuocThi", new CuocThi());
-        model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
+        model.addAttribute("listMonThi", monThiService.getAllMonThisHien());
         model.addAttribute("allQuyDinhs", quyDinhService.getAllQuyDinhsHien());
         model.addAttribute("allNoiDungs", noiDungService.getAllNoiDungsHien());
         return "CuocThi/add";
@@ -60,7 +61,7 @@ public class CuocThiController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
-            model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
+            model.addAttribute("listMonThi", monThiService.getAllMonThisHien());
             model.addAttribute("allQuyDinhs", quyDinhService.getAllQuyDinhsHien());
             model.addAttribute("allNoiDungs", noiDungService.getAllNoiDungsHien());
             return "CuocThi/add";
@@ -93,30 +94,46 @@ public class CuocThiController {
         CuocThi cuocThi = cuocThiService.getCuocThiById(id)
                 .orElseThrow(() -> new EntityNotFoundException("LoaiTruong not found with id: " + id));
         model.addAttribute("cuocThi", cuocThi);
-        model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
+        model.addAttribute("listMonThi", monThiService.getAllMonThisHien());
+        model.addAttribute("listQuyDinh", quyDinhService.getAllQuyDinhsHien());
+        model.addAttribute("listNoiDung", noiDungService.getAllNoiDungsHien());
         return "CuocThi/edit";
     }
 
     @PostMapping("/edit")
     public String updateCuocThi(@Valid @ModelAttribute("CuocThi") CuocThi cuocThi,
-                               @NotNull BindingResult bindingResult,
-                               Model model) {
+                                @NotNull BindingResult bindingResult,
+                                @RequestParam(value = "selectedNoiDungs", required = false) List<Long> selectedNoiDungIds,
+                                @RequestParam(value = "selectedQuyDinhs", required = false) List<Long> selectedQuyDinhIds,
+                                Model model) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors()
                     .stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
-            model.addAttribute("listMonThi",monThiService.getAllMonThisHien());
+            model.addAttribute("listMonThi", monThiService.getAllMonThisHien());
+
             return "CuocThi/edit";
         }
         cuocThiService.updateCuocThi(cuocThi);
+
         return "redirect:/CuocThis";
     }
 
-    @GetMapping("/AnHien/{id}")
-    public String toggleVisibility(@PathVariable Long id) {
-        cuocThiService.AnHien(id);
-        return "redirect:/CuocThis";
+    /*xem chi tiet cuoc thi */
+    @GetMapping("/details/{id}")
+    public String detailsCuocThi(@PathVariable Long id, Model model) {
+        CuocThi cuocThi = cuocThiService.getCuocThiById(id)
+                .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: " + id));
+        List<ChiTietNoiDung> chiTietNoiDungs = CTNDService.getChiTietNoiDungsByCuocThiId(id);
+        List<ChiTietQuyDinh> chiTietQuyDinhs = CTQDService.getChiTietQuyDinhsByCuocThiId(id);
+
+        model.addAttribute("cuocThi", cuocThi);
+        model.addAttribute("chiTietNoiDungs", chiTietNoiDungs);
+        model.addAttribute("chiTietQuyDinhs", chiTietQuyDinhs);
+        return "CuocThi/details";
     }
+
+
 }

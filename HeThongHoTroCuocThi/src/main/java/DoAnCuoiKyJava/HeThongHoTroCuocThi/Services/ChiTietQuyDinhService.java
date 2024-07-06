@@ -6,6 +6,7 @@ import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IChiTietQuyDinhRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,5 +15,10 @@ public class ChiTietQuyDinhService {
     private final IChiTietQuyDinhRepository CTQDRepository;
     public ChiTietQuyDinh addChiTietQuyDinh(ChiTietQuyDinh CTQD) {
         return CTQDRepository.save(CTQD);
+    }
+
+    //moi vua them vao
+    public List<ChiTietQuyDinh> getChiTietQuyDinhsByCuocThiId(Long cuocThiId) {
+        return CTQDRepository.findByCuocThiId(cuocThiId);
     }
 }

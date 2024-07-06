@@ -1,6 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ICuocThiRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.CuocThiCreateRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +15,11 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class CuocThiService {
     private final ICuocThiRepository cuocThiRepository;
+    private final ChiTietNoiDungService CTNDService;
+    private final ChiTietQuyDinhService CTQDService;
+    private final NoiDungService noiDungService;
+    private final QuyDinhService quyDinhService;
+
 
     public List<CuocThi> getAllCuocThis() {
         return cuocThiRepository.findAll();
