@@ -88,16 +88,24 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    //Hàm lưu ảnh vào local
+    // Hàm lưu ảnh vào local
     public String saveImage(MultipartFile file) {
         // Lấy tên file
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         // Đường dẫn lưu file
         String uploadDir = "src/main/resources/static/images/";
-        Path filePath = Paths.get(uploadDir, fileName);
+        Path uploadPath = Paths.get(uploadDir);
 
         try {
+            // Tạo thư mục nếu chưa tồn tại
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Đường dẫn file
+            Path filePath = uploadPath.resolve(fileName);
+
             // Lưu file vào thư mục
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

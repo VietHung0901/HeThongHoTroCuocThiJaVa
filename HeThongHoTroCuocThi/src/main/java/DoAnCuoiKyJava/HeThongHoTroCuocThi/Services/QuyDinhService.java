@@ -3,12 +3,22 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.NoiDung;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.QuyDinh;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IQuyDinhRepository;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.NoiDungCreateRequest;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.QuyDinhCreateRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,16 +55,47 @@ public class QuyDinhService {
         }
     }
 
-    @Transactional
-    public void anHienMonThi(Long id) {
-        QuyDinh quyDinh = quyDinhRepository.findById(id).orElse(null);
-        if (quyDinh != null) {
-            if (quyDinh.getTrangThai() != 0) {
-                quyDinh.setTrangThai(0);
-            } else {
-                quyDinh.setTrangThai(1);
-            }
-            quyDinhRepository.save(quyDinh);
+    public void AnHien(Long id) {
+        QuyDinh quyDinh = quyDinhRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(""));
+
+        quyDinh.setTrangThai(quyDinh.getTrangThai() == 0 ? 1 : 0);
+        quyDinhRepository.save(quyDinh);
+    }
+
+    //hàm chuyển từ NoiDungCreateRequest sang NoiDung
+    public QuyDinh mapToQuyDinh(QuyDinhCreateRequest quyDinhCreateRequest) {
+        QuyDinh quyDinh = new QuyDinh();
+        quyDinh.setId(quyDinhCreateRequest.getId());
+        quyDinh.setTenQuyDinh(quyDinhCreateRequest.getTenQuyDinh());
+        quyDinh.setMoTaQuyDinh(quyDinhCreateRequest.getMoTaQuyDinh());
+        if (!quyDinhCreateRequest.getImageUrl().isEmpty()) {
+            String image = saveImage(quyDinhCreateRequest.getImageUrl());
+            quyDinh.setImageUrl(image);
         }
+        return quyDinh;
+    }
+
+    //Hàm lưu ảnh vào local dưới dạng images/imageName
+    public String saveImage(MultipartFile file) {
+        // Lấy tên file
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        // Đường dẫn lưu file
+        String uploadDir = "src/main/resources/static/images/";
+        Path filePath = Paths.get(uploadDir, fileName);
+
+        try {
+            // Tạo thư mục nếu chưa tồn tại
+            Files.createDirectories(Paths.get(uploadDir));
+
+            // Lưu file vào thư mục
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not save file: " + fileName, e);
+        }
+
+        // Trả về đường dẫn của file đã lưu
+        return "/images/" + fileName;
     }
 }
