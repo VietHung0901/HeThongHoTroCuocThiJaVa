@@ -26,7 +26,7 @@ public class PhieuDangKyController {
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
         model.addAttribute("phieuDangKys", phieuDangKyService.getAllPhieuDangKystheoCuocThi(id));
-
+        model.addAttribute("userService", userService);
         return "PhieuDangKy/list";
     }
 

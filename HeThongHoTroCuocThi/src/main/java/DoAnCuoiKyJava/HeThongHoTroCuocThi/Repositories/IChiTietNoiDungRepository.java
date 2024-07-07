@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface IChiTietNoiDungRepository extends JpaRepository<ChiTietNoiDung, Long>{
     List<NoiDung> findAllNoiDungByCuocThi(CuocThi cuocThi);
+    List<ChiTietNoiDung> findByCuocThiId(Long cuocThiId);
 }

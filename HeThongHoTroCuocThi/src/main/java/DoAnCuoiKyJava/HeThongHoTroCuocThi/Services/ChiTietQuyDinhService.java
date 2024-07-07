@@ -34,4 +34,8 @@ public class ChiTietQuyDinhService {
         }
         return quyDinhs;
     }
+
+    public List<ChiTietQuyDinh> getChiTietQuyDinhsByCuocThiId(Long cuocThiId) {
+        return CTQDRepository.findByCuocThiId(cuocThiId);
+    }
 }

@@ -202,4 +202,19 @@ public class CuocThiController {
         cuocThiService.AnHien(id);
         return "redirect:/CuocThis";
     }
+
+    /*xem chi tiet cuoc thi */
+    @GetMapping("/details/{id}")
+    public String detailsCuocThi(@PathVariable Long id, Model model) {
+        CuocThi cuocThi = cuocThiService.getCuocThiById(id)
+                .orElseThrow(() -> new EntityNotFoundException(""));
+        List<ChiTietNoiDung> chiTietNoiDungs = CTNDService.getChiTietNoiDungsByCuocThiId(id);
+        List<ChiTietQuyDinh> chiTietQuyDinhs = CTQDService.getChiTietQuyDinhsByCuocThiId(id);
+
+        model.addAttribute("cuocThi", cuocThi);
+        model.addAttribute("chiTietNoiDungs", chiTietNoiDungs);
+        model.addAttribute("chiTietQuyDinhs", chiTietQuyDinhs);
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        return "CuocThi/details";
+    }
 }

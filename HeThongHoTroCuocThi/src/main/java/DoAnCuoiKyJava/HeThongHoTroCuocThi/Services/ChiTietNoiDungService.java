@@ -37,4 +37,8 @@ public class ChiTietNoiDungService {
         }
         return noiDungs;
     }
+
+    public List<ChiTietNoiDung> getChiTietNoiDungsByCuocThiId(Long cuocThiId) {
+        return CTNDRepository.findByCuocThiId(cuocThiId);
+    }
 }
