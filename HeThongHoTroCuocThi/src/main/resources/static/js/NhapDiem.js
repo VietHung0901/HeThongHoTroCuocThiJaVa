@@ -1,4 +1,4 @@
-    // Lắng nghe sự kiện click trên nút "Xác nhận"
+// Lắng nghe sự kiện click trên nút "Xác nhận"
 document.getElementById('confirmInfoButton').addEventListener('click', function() {
     // Lấy giá trị CCCD từ trường input
     var cccd = document.getElementById('cccd').value;
@@ -28,6 +28,25 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             var imageElement = document.getElementById('imageUrl');
             imageElement.src = data.imageUrl;
             imageElement.style.display = 'block'; // Hiển thị ảnh
+
+            var inputUser = document.getElementById("userId");
+            var UserId = inputUser.value;
+
+            var inputPDK = document.getElementById("phieuDangKyUserId");
+            var pdkUserId = inputPDK.value;
+
+            var formNhapDiem = document.getElementsByClassName("form-NhapDiem")[0];
+
+            if(UserId === pdkUserId)
+            {
+                alert('Thông tin thí sinh trùng khớp với phiếu đăng ký, Mới nhập điểm.');
+                formNhapDiem.style.display = "block";
+            }
+            else
+            {
+                alert('Thông tin thí sinh không trùng khớp với phiếu đăng ký, Vui lòng xác nhận lại!');
+                formNhapDiem.style.display = "none";
+            }
         })
         .catch(error => {
             // Xử lý lỗi
@@ -38,5 +57,6 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             document.getElementById('email').value = '';
             document.getElementById('truongId').value = '';
             document.getElementById('truongName').value = '';
+            formNhapDiem.style.display = "none";
         });
 });

@@ -31,6 +31,7 @@ public class PhieuDangKyService {
     public Optional<PhieuDangKy> getPhieuDangKyById(Long id) {
         return phieuDangKyRepository.findById(id);
     }
+
     public PhieuDangKy addPhieuDangKy(PhieuDangKy phieuDangKy) {
         phieuDangKy.setTrangThai(1);
         return phieuDangKyRepository.save(phieuDangKy);

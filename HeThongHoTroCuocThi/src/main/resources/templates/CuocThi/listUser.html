@@ -37,6 +37,7 @@
             <td th:text="${cuocThi.monThi.tenMonThi}"></td>
             <td th:text="${loaiTruongService.getNameById(cuocThi.loaiTruongId)}"></td>
             <td>
+                <a class="btn btn-info btn-sm" th:href="@{/CuocThis/details/{id}(id=${cuocThi.id})}">Xem</a>
                 <a class="btn btn-primary btn-sm" th:href="@{/PhieuDangKys/add/id/{id}(id=${cuocThi.id})}">Đăng ký</a>
             </td>
         </tr>

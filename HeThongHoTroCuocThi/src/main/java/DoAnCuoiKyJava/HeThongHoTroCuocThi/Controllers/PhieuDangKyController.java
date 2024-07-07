@@ -22,11 +22,13 @@ public class PhieuDangKyController {
     private final UserService userService;
     private final TruongService truongService;
     private final LoaiTruongService loaiTruongService;
+    private final PhieuKetQuaService phieuKetQuaService;
 
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
         model.addAttribute("phieuDangKys", phieuDangKyService.getAllPhieuDangKystheoCuocThi(id));
         model.addAttribute("userService", userService);
+        model.addAttribute("phieuKetQuaService", phieuKetQuaService);
         return "PhieuDangKy/list";
     }
 
@@ -121,7 +123,7 @@ public class PhieuDangKyController {
 
         PhieuDangKy phieuDangKy = phieuDangKyService.mapToPhieuDangKy(phieuDangKyCreate);
         phieuDangKyService.addPhieuDangKy(phieuDangKy);
-        return "redirect:/PhieuDangKys";
+        return "redirect:/CuocThis";
     }
 
     @GetMapping("/edit/{id}")

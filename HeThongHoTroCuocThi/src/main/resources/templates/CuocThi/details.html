@@ -69,10 +69,12 @@
     </div>
 
     <div class="button-container mb-4">
-        <a th:href="@{/CuocThis}" class="btn btn-primary">Trở về</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/CuocThis}" class="btn btn-primary">Trở về</a>
+        <a sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')" th:href="@{/CuocThis/User}" class="btn btn-primary" >Trở về</a>
         <button class="btn btn-secondary" id="showQuyDinhBtn">Quy định</button>
         <button class="btn btn-secondary" id="showNoiDungBtn">Nội dung</button>
-        <a class="btn btn-primary btn-dangky" th:href="@{/PhieuDangKys/add/id/{id}(id=${cuocThi.id})}">Đăng ký</a>
+        <a sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')" class="btn btn-primary btn-dangky" th:href="@{/PhieuDangKys/add/id/{id}(id=${cuocThi.id})}">Đăng ký</a>
+        <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary btn-dangky" th:href="@{/PhieuDangKys/cuocThi/id/{id}(id=${cuocThi.id})}">Danh sách phiếu đăng ký</a>
     </div>
 
     <div class="container-qdnd">
