@@ -39,7 +39,7 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
 
             if(UserId === pdkUserId)
             {
-                alert('Thông tin thí sinh trùng khớp với phiếu đăng ký, Mới nhập điểm.');
+                // alert('Thông tin thí sinh trùng khớp với phiếu đăng ký, Mời nhập/sửa điểm.');
                 formNhapDiem.style.display = "block";
             }
             else

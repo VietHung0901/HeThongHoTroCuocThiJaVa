@@ -2,12 +2,12 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IPhieuKetQuaRepository;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.PhieuKetQuaRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +21,29 @@ public class PhieuKetQuaService {
     public List<PhieuKetQua> getAllPhieuKetQuastheoCuocThi(CuocThi cuocThi) {
         List<PhieuKetQua> listPKQ = new ArrayList<>();
         for (PhieuKetQua pkq : getAllPhieuKetQua()) {
-            if(pkq.getPhieuDangKy().getCuocThi() == cuocThi) {
+            if (pkq.getPhieuDangKy().getCuocThi() == cuocThi) {
                 listPKQ.add(pkq);
             }
         }
+        // Sắp xếp listPKQ giảm dần theo điểm, tăng dần theo phút, tăng dần theo giây
+        Collections.sort(listPKQ, new Comparator<PhieuKetQua>() {
+            @Override
+            public int compare(PhieuKetQua pkq1, PhieuKetQua pkq2) {
+                int diemCompare = Integer.compare(pkq2.getDiem(), pkq1.getDiem());
+                if (diemCompare != 0) {
+                    return diemCompare;
+                }
+                int phutCompare = Integer.compare(pkq1.getPhut(), pkq2.getPhut());
+                if (phutCompare != 0) {
+                    return phutCompare;
+                }
+                return Integer.compare(pkq1.getGiay(), pkq2.getGiay());
+            }
+        });
+
         return listPKQ;
     }
+
 
     public Optional<PhieuKetQua> getPhieuKetQuaById(Long id) {
         return phieuKetQuaRepository.findById(id);
@@ -37,15 +54,41 @@ public class PhieuKetQuaService {
         return phieuKetQuaRepository.save(phieuKetQua);
     }
 
-    public String getDiemByCuocThiIdvaUserId(Long cuocThiId,Long userId)
-    {
+    public String getDiemByCuocThiIdvaUserId(Long cuocThiId, Long userId) {
         for (PhieuKetQua pkq : getAllPhieuKetQua()) {
-            if(pkq.getPhieuDangKy().getCuocThi().getId() == cuocThiId && pkq.getPhieuDangKy().getUser().getId() == userId) {
+            if (pkq.getPhieuDangKy().getCuocThi().getId() == cuocThiId && pkq.getPhieuDangKy().getUser().getId() == userId) {
                 return String.valueOf(pkq.getDiem());
             }
         }
-        return " ";
-
+        return null;
     }
 
+    public PhieuKetQua getPhieuKetQuaByPhieuDangKy(PhieuDangKy phieuDangKy) {
+        for (PhieuKetQua pkq : getAllPhieuKetQua()) {
+            if (pkq.getPhieuDangKy() == phieuDangKy) {
+                return pkq;
+            }
+        }
+        return null;
+    }
+
+    public PhieuKetQua updatePhieuKetQua(PhieuKetQua updatephieuKetQua)
+    {
+        PhieuKetQua pkq = getPhieuKetQuaById(updatephieuKetQua.getId()).orElseThrow(() -> new EntityNotFoundException(""));
+        pkq.setDiem(updatephieuKetQua.getDiem());
+        pkq.setPhut(updatephieuKetQua.getPhut());
+        pkq.setGiay(updatephieuKetQua.getGiay());
+        return phieuKetQuaRepository.save(pkq);
+    }
+
+    public PhieuKetQuaRequest mapToPhieuKetQuaRequest(PhieuKetQua phieuKetQua)
+    {
+        PhieuKetQuaRequest phieuKetQuaRequest = new PhieuKetQuaRequest();
+        phieuKetQuaRequest.setId(phieuKetQua.getId());
+        phieuKetQuaRequest.setPhut(phieuKetQua.getPhut());
+        phieuKetQuaRequest.setGiay(phieuKetQua.getGiay());
+        phieuKetQuaRequest.setDiem(phieuKetQua.getDiem());
+        phieuKetQuaRequest.setPhieuDangKy(phieuKetQua.getPhieuDangKy());
+        return phieuKetQuaRequest;
+    }
 }

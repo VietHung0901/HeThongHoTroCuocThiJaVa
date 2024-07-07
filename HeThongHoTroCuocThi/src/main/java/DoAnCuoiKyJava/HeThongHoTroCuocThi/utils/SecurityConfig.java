@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/",
                                 "/oauth/**", "/register", "/error","/CuocThis/User")
                         .permitAll()
-                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs")
+                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs", "/PhieuKetQuas/add")
                         .hasAnyAuthority("ADMIN")
                         .requestMatchers("/PhieuDangKys")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")

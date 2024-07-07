@@ -29,6 +29,7 @@ public class PhieuDangKyController {
         model.addAttribute("phieuDangKys", phieuDangKyService.getAllPhieuDangKystheoCuocThi(id));
         model.addAttribute("userService", userService);
         model.addAttribute("phieuKetQuaService", phieuKetQuaService);
+        model.addAttribute("cuocThiId", id);
         return "PhieuDangKy/list";
     }
 
