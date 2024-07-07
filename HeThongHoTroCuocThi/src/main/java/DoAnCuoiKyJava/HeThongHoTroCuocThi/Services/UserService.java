@@ -2,6 +2,7 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Provider;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Role;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IRoleRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IUserRepository;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
 //Các thư viện dùng lưu ảnh vào local
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
@@ -43,6 +45,14 @@ public class UserService implements UserDetailsService {
 
     public User findByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
+    }
+
+    public User findById(Long id) throws UsernameNotFoundException {
+        return userRepository.findById(id);
+    }
+
+    public Optional<User> getUserByCCCD(String id) {
+        return userRepository.findByCccd(id);
     }
 
     public void saveOauthUser(String email, @NotNull String username) {
@@ -78,16 +88,24 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    //Hàm lưu ảnh vào local
+    // Hàm lưu ảnh vào local
     public String saveImage(MultipartFile file) {
         // Lấy tên file
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         // Đường dẫn lưu file
         String uploadDir = "src/main/resources/static/images/";
-        Path filePath = Paths.get(uploadDir, fileName);
+        Path uploadPath = Paths.get(uploadDir);
 
         try {
+            // Tạo thư mục nếu chưa tồn tại
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Đường dẫn file
+            Path filePath = uploadPath.resolve(fileName);
+
             // Lưu file vào thư mục
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

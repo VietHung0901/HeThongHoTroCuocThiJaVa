@@ -3,10 +3,9 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -22,7 +21,8 @@ public class PhieuDangKy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date ngayDangKy;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime ngayDangKy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuocThi_id", referencedColumnName = "id")

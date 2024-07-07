@@ -3,6 +3,8 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +25,8 @@ public class NoiDung {
 
     @Column(name = "tenNoiDung", length = 50, nullable = false)
     private String tenNoiDung;
+
+    private String moTaNoiDung;
 
     private String imageUrl;
 

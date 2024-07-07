@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <title>DANH SÁCH PHIẾU ĐĂNG KÝ</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="my-4">DANH SÁCH PHIẾU ĐĂNG KÝ</h1>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Mã phiếu</th>
+            <th>Cuộc thi</th>
+            <th>Họ và tên</th>
+            <th>Email</th>
+            <th>SDT</th>
+            <th>Trường</th>
+            <th>Điểm</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="phieuDangKy : ${phieuDangKys}">
+            <td th:text="${phieuDangKy.id}"></td>
+            <td th:text="${phieuDangKy.cuocThi.getTenCuocThi()}"></td>
+            <td th:text="${phieuDangKy.user.getHoten()}"></td>
+            <td th:text="${phieuDangKy.user.getEmail()}"></td>
+            <td th:text="${phieuDangKy.user.getPhone()}"></td>
+            <td th:text="${phieuDangKy.user.getTruong().getTenTruong()}"></td>
+            <td th:text="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)}"></td>
+            <td>
+                <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary btn-dangky" th:href="@{/PhieuKetQuas/add/pdkId/{id}(id=${phieuDangKy.id})}">Nhập điểm</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

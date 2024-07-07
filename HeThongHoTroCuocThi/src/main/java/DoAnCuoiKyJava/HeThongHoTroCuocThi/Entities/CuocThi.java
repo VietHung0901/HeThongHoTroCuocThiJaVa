@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -25,11 +27,14 @@ public class CuocThi {
     @Column(name = "tenCuocThi", length = 50, nullable = false)
     private String tenCuocThi;
 
-    private Date ngayThi;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime ngayThi;
 
     private int soLuongThiSinh;
 
-    private String DiaDiemThi;
+    private String diaDiemThi;
+
+    private Long loaiTruongId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monThi_id", referencedColumnName = "id")
