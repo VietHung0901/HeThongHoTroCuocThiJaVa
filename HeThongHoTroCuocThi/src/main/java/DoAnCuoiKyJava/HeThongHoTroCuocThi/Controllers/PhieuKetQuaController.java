@@ -89,4 +89,13 @@ public class PhieuKetQuaController {
         Long cuocThiId = phieuKetQua.getPhieuDangKy().getCuocThi().getId();
         return "redirect:/PhieuDangKys/cuocThi/id/" + cuocThiId;
     }
+
+    @GetMapping("/thongke/cuocThiId/{id}")
+    public String thongKeDiem(@PathVariable Long id, Model model) {
+        CuocThi cuocThi = cuocThiService.getCuocThiById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        List<PhieuKetQua> phieuKetQuas = phieuKetQuaService.getAllPhieuKetQuastheoCuocThi(cuocThi);
+        List<Integer> diems = phieuKetQuas.stream().map(phieuKetQua -> phieuKetQua.getDiem()).collect(Collectors.toList());
+        model.addAttribute("diems", diems);
+        return "PhieuKetQua/thongke";
+    }
 }

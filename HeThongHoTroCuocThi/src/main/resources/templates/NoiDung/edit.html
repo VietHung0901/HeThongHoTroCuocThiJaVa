@@ -28,7 +28,6 @@
                 <input type="file" class="form-control form-control-lg" id="imageUrl" onchange="previewImage()" name="imageUrlFile">
                 <img id="preview-image" th:src="@{${noiDung.imageUrl}}" alt="Preview Image" class="img-fluid mb-3" style="display: block;">
             </div>
-
         </div>
         <button type="submit" class="btn btn-primary">Lưu</button>
         <a th:href="@{/NoiDungs}" class="btn btn-secondary">Trở về</a>

@@ -31,8 +31,6 @@ public class ChiTietNoiDungService {
         for (ChiTietNoiDung chiTietNoiDung : chiTietNoiDungs) {
             if(chiTietNoiDung.getCuocThi() == cuocThi) {
                 noiDungs.add(chiTietNoiDung.getNoiDung());
-                //Xóa, khi sửa sẽ thêm vào lại
-//                CTNDRepository.delete(chiTietNoiDung);
             }
         }
         return noiDungs;

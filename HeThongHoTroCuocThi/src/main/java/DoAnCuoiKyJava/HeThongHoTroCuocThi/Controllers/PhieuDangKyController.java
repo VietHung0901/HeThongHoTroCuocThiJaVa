@@ -8,10 +8,15 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +28,11 @@ public class PhieuDangKyController {
     private final TruongService truongService;
     private final LoaiTruongService loaiTruongService;
     private final PhieuKetQuaService phieuKetQuaService;
+
+    @GetMapping("/User")
+    public String showPhieuDangKy() {
+        return "PhieuDangKy/detailsUser";
+    }
 
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
@@ -98,8 +108,7 @@ public class PhieuDangKyController {
         User user = userService.findById(phieuDangKyCreate.getUserId());
         Truong truongUser = truongService.getTruongById(user.getTruong().getId())
                 .orElseThrow(() -> new EntityNotFoundException(""));
-        if(truongUser.getLoaiTruong().getId() != phieuDangKyCreate.getCuocThi().getLoaiTruongId())
-        {
+        if (truongUser.getLoaiTruong().getId() != phieuDangKyCreate.getCuocThi().getLoaiTruongId()) {
             model.addAttribute("errorMessage", "Cuộc thi không dành cho cấp học của bạn");
             CuocThi cuocThi = cuocThiService.getCuocThiById(phieuDangKyCreate.getCuocThi().getId())
                     .orElseThrow(() -> new EntityNotFoundException("CuocThi not found with id: "));
@@ -139,8 +148,8 @@ public class PhieuDangKyController {
 
     @PostMapping("/edit")
     public String updatePhieuDangKy(@Valid @ModelAttribute("PhieuDangKy") PhieuDangKy phieuDangKy,
-                               @NotNull BindingResult bindingResult,
-                               Model model) {
+                                    @NotNull BindingResult bindingResult,
+                                    Model model) {
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors()
                     .stream()
@@ -151,5 +160,24 @@ public class PhieuDangKyController {
         }
         phieuDangKyService.updatePhieuDangKy(phieuDangKy);
         return "redirect:/PhieuDangKys/cuocThi/id/" + phieuDangKy.getCuocThi().getId();
+    }
+
+    @GetMapping("/search")
+    public String showSearchForm(Model model) {
+        return "PhieuDangKy/search";
+    }
+
+    @GetMapping("/search-result")
+    public String searchPhieuDangKy(@RequestParam("ngayThi") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayThi,
+                                    @RequestParam("cccd") String cccd,
+                                    Model model) {
+        List<PhieuDangKy> listPDK =  phieuDangKyService.findByUserCccdAndCuocThiNgayThi(cccd, ngayThi);
+        if (listPDK != null) {
+            model.addAttribute("phieuDangKys", listPDK);
+            return "PhieuDangKy/pdkSearch";
+        } else {
+            model.addAttribute("errorMessage", "Không tìm thấy kết quả tương ứng.");
+            return "PhieuDangKy/pdkSearch";
+        }
     }
 }

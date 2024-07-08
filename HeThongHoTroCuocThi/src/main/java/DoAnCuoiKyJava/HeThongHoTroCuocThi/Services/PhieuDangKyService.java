@@ -1,7 +1,5 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.ChiTietNoiDung;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.NoiDung;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IPhieuDangKyRepository;
@@ -10,7 +8,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,5 +77,15 @@ public class PhieuDangKyService {
                 return true;
         }
         return false;
+    }
+
+    public List<PhieuDangKy> findByUserCccdAndCuocThiNgayThi(String cccd, Date ngayThi) {
+        List<PhieuDangKy> listPDK = new ArrayList<>();
+        for (PhieuDangKy pdk : getAllPhieuDangKys()) {
+            if (pdk.getCuocThi().getNgayThi().equals(ngayThi) && pdk.getUser().getCccd().equals(cccd)) {
+                listPDK.add(pdk);
+            }
+        }
+        return listPDK;
     }
 }

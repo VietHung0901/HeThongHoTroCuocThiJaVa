@@ -27,7 +27,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">
-<!--                <img th:src="@{/images/logoMOS.jpg}" alt="MOS Logo" height="50">-->
                 <span class="icon-text">M</span>
                 <span class="icon-text">O</span>
                 <span class="icon-text">S</span>
@@ -80,6 +79,16 @@
                     <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')">
                         <a class="nav-link" href="/CuocThis/User">
                             Cuộc thi
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/PhieuDangKys/search">
+                            Phiếu đăng ký
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/CuocThis/User">
+                            Tra kết quả
                         </a>
                     </li>
                 </ul>
