@@ -1,10 +1,8 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuKetQua;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.PhieuKetQuaRequest;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.CuocThiService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuDangKyService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuKetQuaService;
@@ -37,36 +35,6 @@ public class PhieuKetQuaController {
         return "PhieuKetQua/list";
     }
 
-//    @GetMapping("/cuocThi/{id}")
-//    public String showAllPhieuKetQuaByCuocThi(@PathVariable Long id, Model model) {
-//        CuocThi cuocThi = cuocThiService.getCuocThiById(id).orElseThrow(() -> new EntityNotFoundException(""));
-//        List<PhieuKetQua> phieuKetQuas = phieuKetQuaService.getAllPhieuKetQuastheoCuocThi(cuocThi);
-//
-//        List<PhieuKetQuaRequest> phieuKetQuaRequests = phieuKetQuas.stream()
-//                .map(phieuKetQuaService::mapToPhieuKetQuaRequest)
-//                .collect(Collectors.toList());
-//
-//        int previousRank = -1;
-//        int currentRank = 1;
-//
-//        for (PhieuKetQuaRequest phieuKetQua : phieuKetQuaRequests) {
-//            if (previousRank != -1 &&
-//                    (phieuKetQua.getDiem() != phieuKetQuaRequests.get(previousRank).getDiem() ||
-//                            phieuKetQua.getPhut() != phieuKetQuaRequests.get(previousRank).getPhut() ||
-//                            phieuKetQua.getGiay() != phieuKetQuaRequests.get(previousRank).getGiay())) {
-//                currentRank++;
-//            }
-//            phieuKetQua.setHang(currentRank);
-//            previousRank++;
-//        }
-//
-//        model.addAttribute("phieuKetQuas", phieuKetQuaRequests);
-//        model.addAttribute("cuocThi", cuocThi);
-//        return "PhieuKetQua/list";
-//    }
-
-
-    
     @GetMapping("/add/pkq/pdkId/{id}")
     public String addPhieuKetQuaForm(@PathVariable Long id, @NotNull Model model) {
         PhieuDangKy phieuDangKy = phieuDangKyService.getPhieuDangKyById(id).orElseThrow(() -> new EntityNotFoundException(""));
@@ -119,4 +87,43 @@ public class PhieuKetQuaController {
         Long cuocThiId = phieuKetQua.getPhieuDangKy().getCuocThi().getId();
         return "redirect:/PhieuDangKys/cuocThi/id/" + cuocThiId;
     }
+
+    @GetMapping("/thongke/cuocThiId/{id}")
+    public String thongKeDiem(@PathVariable Long id, Model model) {
+        CuocThi cuocThi = cuocThiService.getCuocThiById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        List<PhieuKetQua> phieuKetQuas = phieuKetQuaService.getAllPhieuKetQuastheoCuocThi(cuocThi);
+        List<Integer> diems = phieuKetQuas.stream().map(phieuKetQua -> phieuKetQua.getDiem()).collect(Collectors.toList());
+        model.addAttribute("diems", diems);
+        return "PhieuKetQua/thongke";
+    }
+
 }
+
+
+//    @GetMapping("/cuocThi/{id}")
+//    public String showAllPhieuKetQuaByCuocThi(@PathVariable Long id, Model model) {
+//        CuocThi cuocThi = cuocThiService.getCuocThiById(id).orElseThrow(() -> new EntityNotFoundException(""));
+//        List<PhieuKetQua> phieuKetQuas = phieuKetQuaService.getAllPhieuKetQuastheoCuocThi(cuocThi);
+//
+//        List<PhieuKetQuaRequest> phieuKetQuaRequests = phieuKetQuas.stream()
+//                .map(phieuKetQuaService::mapToPhieuKetQuaRequest)
+//                .collect(Collectors.toList());
+//
+//        int previousRank = -1;
+//        int currentRank = 1;
+//
+//        for (PhieuKetQuaRequest phieuKetQua : phieuKetQuaRequests) {
+//            if (previousRank != -1 &&
+//                    (phieuKetQua.getDiem() != phieuKetQuaRequests.get(previousRank).getDiem() ||
+//                            phieuKetQua.getPhut() != phieuKetQuaRequests.get(previousRank).getPhut() ||
+//                            phieuKetQua.getGiay() != phieuKetQuaRequests.get(previousRank).getGiay())) {
+//                currentRank++;
+//            }
+//            phieuKetQua.setHang(currentRank);
+//            previousRank++;
+//        }
+//
+//        model.addAttribute("phieuKetQuas", phieuKetQuaRequests);
+//        model.addAttribute("cuocThi", cuocThi);
+//        return "PhieuKetQua/list";
+//    }

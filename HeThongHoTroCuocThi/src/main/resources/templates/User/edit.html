@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHỈNH SỬA THÔNG TIN CÁ NHÂN</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h2>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h2>
+    <form th:action="@{/User/edit}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" th:field="*{username}">
+        </div>
+        <div class="form-group">
+            <label for="hoten">Full Name</label>
+            <input type="text" class="form-control" id="hoten" th:field="*{hoten}">
+        </div>
+        <div class="form-group">
+            <label for="cccd">CCCD</label>
+            <input type="text" class="form-control" id="cccd" th:field="*{cccd}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" th:field="*{phone}">
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">Profile Image</label>
+            <input type="file" class="form-control" id="imageUrl" th:field="*{imageUrl}">
+        </div>
+        <div class="form-group">
+            <label for="truong">School</label>
+            <select class="form-control" id="truong" th:field="*{truong}">
+                <option th:each="truong : ${listTruong}" th:value="${truong.id}" th:text="${truong.tenTruong}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    </form>
+</div>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+</body>
+</html>

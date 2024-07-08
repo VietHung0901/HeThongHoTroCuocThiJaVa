@@ -3,9 +3,11 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Provider;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Role;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IRoleRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IUserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -106,5 +108,19 @@ public class UserService implements UserDetailsService {
 
         // Trả về đường dẫn của file đã lưu
         return "/images/" + fileName;
+    }
+
+    public User saveUser(User updateUser) {
+        User user = getUserByCCCD(updateUser.getCccd())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with CCCD: " + updateUser.getCccd()));
+
+        user.setCccd(updateUser.getCccd());
+        user.setHoten(updateUser.getHoten());
+        user.setUsername(updateUser.getUsername());
+        user.setPhone(updateUser.getPhone());
+        user.setEmail(updateUser.getEmail());
+        user.setImageUrl(updateUser.getImageUrl());
+        user.setTruong(updateUser.getTruong());
+        return userRepository.save(user);
     }
 }
