@@ -27,6 +27,10 @@ public class TruongService {
         return truongRepository.findById(id);
     }
 
+    public Truong findTruongById(Long id) {
+        return truongRepository.findTruongById(id);
+    }
+
     public Truong addTruong(Truong truong) {
         truong.setTrangThai(1);
         return truongRepository.save(truong);

@@ -9,7 +9,8 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
         alert("Vui lòng nhập CCCD.");
         return;
     }
-
+    var formNhapDiem = document.getElementsByClassName("form-NhapDiem")[0];
+    var imageElement = document.getElementById('imageUrl');
     // Gọi API để lấy thông tin người dùng
     fetch('/User/id/' + cccd)
         .then(response => response.json())
@@ -25,7 +26,6 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             document.getElementById('truongName').value = data.truongName;
 
             // Cập nhật ảnh
-            var imageElement = document.getElementById('imageUrl');
             imageElement.src = data.imageUrl;
             imageElement.style.display = 'block'; // Hiển thị ảnh
 
@@ -34,8 +34,6 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
 
             var inputPDK = document.getElementById("phieuDangKyUserId");
             var pdkUserId = inputPDK.value;
-
-            var formNhapDiem = document.getElementsByClassName("form-NhapDiem")[0];
 
             if(UserId === pdkUserId)
             {
@@ -57,6 +55,7 @@ document.getElementById('confirmInfoButton').addEventListener('click', function(
             document.getElementById('email').value = '';
             document.getElementById('truongId').value = '';
             document.getElementById('truongName').value = '';
+            imageElement.style.display = 'none';
             formNhapDiem.style.display = "none";
         });
 });

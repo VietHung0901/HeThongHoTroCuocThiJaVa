@@ -29,10 +29,19 @@ public class ChiTietQuyDinhService {
             if(chiTietQuyDinh.getCuocThi() == cuocThi) {
                 quyDinhs.add(chiTietQuyDinh.getQuyDinh());
                 //Xóa, khi sửa sẽ thêm vào lại
-                CTQDRepository.delete(chiTietQuyDinh);
+//                CTQDRepository.delete(chiTietQuyDinh);
             }
         }
         return quyDinhs;
+    }
+
+    public void deleteAllQuyDinhByCuocThi(Long cuocThiId) {
+        for (ChiTietQuyDinh chiTietQuyDinh : getAllCTQD()) {
+            if(chiTietQuyDinh.getCuocThi().getId() == cuocThiId) {
+                //Xóa, khi sửa sẽ thêm vào lại
+                CTQDRepository.delete(chiTietQuyDinh);
+            }
+        }
     }
 
     public List<ChiTietQuyDinh> getChiTietQuyDinhsByCuocThiId(Long cuocThiId) {

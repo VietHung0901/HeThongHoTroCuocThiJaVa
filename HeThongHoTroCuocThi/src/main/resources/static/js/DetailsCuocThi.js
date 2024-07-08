@@ -1,49 +1,55 @@
-// Các biến lưu trữ index hiện tại của các danh sách
-let currentQuyDinhIndex = 0;
-let currentNoiDungIndex = 0;
+$(document).ready(function () {
+    var currentQuyDinhPage = 0;
+    var quyDinhPages = $(".listQuyDinh");
+    var totalQuyDinhPages = quyDinhPages.length;
 
-// Hàm để chuyển đến quy định tiếp theo
-function nextQuyDinh() {
-    const quyDinhElements = document.querySelectorAll('.listQuyDinh');
-    if (currentQuyDinhIndex < quyDinhElements.length - 1) {
-        quyDinhElements[currentQuyDinhIndex].style.display = 'none';
-        currentQuyDinhIndex++;
-        quyDinhElements[currentQuyDinhIndex].style.display = 'block';
+    function showQuyDinhPage(index) {
+        quyDinhPages.hide();
+        quyDinhPages.eq(index).show();
     }
-}
 
-// Hàm để chuyển đến quy định trước đó
-function prevQuyDinh() {
-    const quyDinhElements = document.querySelectorAll('.listQuyDinh');
-    if (currentQuyDinhIndex > 0) {
-        quyDinhElements[currentQuyDinhIndex].style.display = 'none';
-        currentQuyDinhIndex--;
-        quyDinhElements[currentQuyDinhIndex].style.display = 'block';
+    $("#prevBtnQuyDinh").click(function () {
+        currentQuyDinhPage = (currentQuyDinhPage > 0) ? currentQuyDinhPage - 1 : totalQuyDinhPages - 1;
+        showQuyDinhPage(currentQuyDinhPage);
+    });
+
+    $("#nextBtnQuyDinh").click(function () {
+        currentQuyDinhPage = (currentQuyDinhPage < totalQuyDinhPages - 1) ? currentQuyDinhPage + 1 : 0;
+        showQuyDinhPage(currentQuyDinhPage);
+    });
+
+    showQuyDinhPage(currentQuyDinhPage);
+
+    var currentNoiDungPage = 0;
+    var noiDungPages = $(".listNoiDung");
+    var totalNoiDungPages = noiDungPages.length;
+
+    function showNoiDungPage(index) {
+        noiDungPages.hide();
+        noiDungPages.eq(index).show();
     }
-}
 
-// Hàm để chuyển đến nội dung tiếp theo
-function nextNoiDung() {
-    const noiDungElements = document.querySelectorAll('.listNoiDung');
-    if (currentNoiDungIndex < noiDungElements.length - 1) {
-        noiDungElements[currentNoiDungIndex].style.display = 'none';
-        currentNoiDungIndex++;
-        noiDungElements[currentNoiDungIndex].style.display = 'block';
-    }
-}
+    $("#prevBtnNoiDung").click(function () {
+        currentNoiDungPage = (currentNoiDungPage > 0) ? currentNoiDungPage - 1 : totalNoiDungPages - 1;
+        showNoiDungPage(currentNoiDungPage);
+    });
 
-// Hàm để chuyển đến nội dung trước đó
-function prevNoiDung() {
-    const noiDungElements = document.querySelectorAll('.listNoiDung');
-    if (currentNoiDungIndex > 0) {
-        noiDungElements[currentNoiDungIndex].style.display = 'none';
-        currentNoiDungIndex--;
-        noiDungElements[currentNoiDungIndex].style.display = 'block';
-    }
-}
+    $("#nextBtnNoiDung").click(function () {
+        currentNoiDungPage = (currentNoiDungPage < totalNoiDungPages - 1) ? currentNoiDungPage + 1 : 0;
+        showNoiDungPage(currentNoiDungPage);
+    });
 
-// Gắn sự kiện click vào các nút
-document.getElementById('prevBtnQuyDinh').addEventListener('click', prevQuyDinh);
-document.getElementById('nextBtnQuyDinh').addEventListener('click', nextQuyDinh);
-document.getElementById('prevBtnNoiDung').addEventListener('click', prevNoiDung);
-document.getElementById('nextBtnNoiDung').addEventListener('click', nextNoiDung);
+    showNoiDungPage(currentNoiDungPage);
+
+    $("#showQuyDinhBtn").click(function () {
+        $("#quyDinhContainer").show();
+        $("#noiDungContainer").hide();
+        showQuyDinhPage(currentQuyDinhPage);
+    });
+
+    $("#showNoiDungBtn").click(function () {
+        $("#noiDungContainer").show();
+        $("#quyDinhContainer").hide();
+        showNoiDungPage(currentNoiDungPage);
+    });
+});

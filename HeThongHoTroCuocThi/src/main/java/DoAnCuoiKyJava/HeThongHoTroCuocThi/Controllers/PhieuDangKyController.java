@@ -27,8 +27,8 @@ public class PhieuDangKyController {
     @GetMapping("/cuocThi/id/{id}")
     public String showAllPhieuDangKyTheoCuocThi(@NotNull Model model, @PathVariable Long id) {
         model.addAttribute("phieuDangKys", phieuDangKyService.getAllPhieuDangKystheoCuocThi(id));
-        model.addAttribute("userService", userService);
         model.addAttribute("phieuKetQuaService", phieuKetQuaService);
+        model.addAttribute("truongService", truongService);
         model.addAttribute("cuocThiId", id);
         return "PhieuDangKy/list";
     }
@@ -130,8 +130,10 @@ public class PhieuDangKyController {
     @GetMapping("/edit/{id}")
     public String editPhieuDangKy(@PathVariable Long id, Model model) {
         PhieuDangKy phieuDangKy = phieuDangKyService.getPhieuDangKyById(id)
-                .orElseThrow(() -> new EntityNotFoundException("LoaiTruong not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tồn tại phiếu đăng ký có id: " + id));
         model.addAttribute("phieuDangKy", phieuDangKy);
+        model.addAttribute("listTruong", truongService.getAllTruongsHien());
+        model.addAttribute("loaiTruongService", loaiTruongService);
         return "PhieuDangKy/edit";
     }
 
@@ -148,6 +150,6 @@ public class PhieuDangKyController {
             return "PhieuDangKy/edit";
         }
         phieuDangKyService.updatePhieuDangKy(phieuDangKy);
-        return "redirect:/PhieuDangKys";
+        return "redirect:/PhieuDangKys/cuocThi/id/" + phieuDangKy.getCuocThi().getId();
     }
 }

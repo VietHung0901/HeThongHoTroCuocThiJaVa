@@ -32,10 +32,20 @@ public class ChiTietNoiDungService {
             if(chiTietNoiDung.getCuocThi() == cuocThi) {
                 noiDungs.add(chiTietNoiDung.getNoiDung());
                 //Xóa, khi sửa sẽ thêm vào lại
-                CTNDRepository.delete(chiTietNoiDung);
+//                CTNDRepository.delete(chiTietNoiDung);
             }
         }
         return noiDungs;
+    }
+
+    //Lấy các Chi tiết nội dung theo cuộc thi
+    public void deleteAllNoiDungByCuocThi(Long cuocThiId) {
+        for (ChiTietNoiDung chiTietNoiDung : getAllCTND()) {
+            if(chiTietNoiDung.getCuocThi().getId() == cuocThiId) {
+                //Xóa, khi sửa sẽ thêm vào lại
+                CTNDRepository.delete(chiTietNoiDung);
+            }
+        }
     }
 
     public List<ChiTietNoiDung> getChiTietNoiDungsByCuocThiId(Long cuocThiId) {

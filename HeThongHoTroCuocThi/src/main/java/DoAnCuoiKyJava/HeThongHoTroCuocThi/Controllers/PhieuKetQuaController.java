@@ -37,36 +37,6 @@ public class PhieuKetQuaController {
         return "PhieuKetQua/list";
     }
 
-//    @GetMapping("/cuocThi/{id}")
-//    public String showAllPhieuKetQuaByCuocThi(@PathVariable Long id, Model model) {
-//        CuocThi cuocThi = cuocThiService.getCuocThiById(id).orElseThrow(() -> new EntityNotFoundException(""));
-//        List<PhieuKetQua> phieuKetQuas = phieuKetQuaService.getAllPhieuKetQuastheoCuocThi(cuocThi);
-//
-//        List<PhieuKetQuaRequest> phieuKetQuaRequests = phieuKetQuas.stream()
-//                .map(phieuKetQuaService::mapToPhieuKetQuaRequest)
-//                .collect(Collectors.toList());
-//
-//        int previousRank = -1;
-//        int currentRank = 1;
-//
-//        for (PhieuKetQuaRequest phieuKetQua : phieuKetQuaRequests) {
-//            if (previousRank != -1 &&
-//                    (phieuKetQua.getDiem() != phieuKetQuaRequests.get(previousRank).getDiem() ||
-//                            phieuKetQua.getPhut() != phieuKetQuaRequests.get(previousRank).getPhut() ||
-//                            phieuKetQua.getGiay() != phieuKetQuaRequests.get(previousRank).getGiay())) {
-//                currentRank++;
-//            }
-//            phieuKetQua.setHang(currentRank);
-//            previousRank++;
-//        }
-//
-//        model.addAttribute("phieuKetQuas", phieuKetQuaRequests);
-//        model.addAttribute("cuocThi", cuocThi);
-//        return "PhieuKetQua/list";
-//    }
-
-
-    
     @GetMapping("/add/pkq/pdkId/{id}")
     public String addPhieuKetQuaForm(@PathVariable Long id, @NotNull Model model) {
         PhieuDangKy phieuDangKy = phieuDangKyService.getPhieuDangKyById(id).orElseThrow(() -> new EntityNotFoundException(""));

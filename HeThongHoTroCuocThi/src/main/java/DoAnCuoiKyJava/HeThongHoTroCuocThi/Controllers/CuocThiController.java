@@ -1,6 +1,8 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IChiTietNoiDungRepository;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IChiTietQuyDinhRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -174,6 +176,9 @@ public class CuocThiController {
             model.addAttribute("errorMessageNoiDung", "Vui lòng chọn ít nhất 1 nội dung!");
             return "CuocThi/edit";
         }
+
+        CTNDService.deleteAllNoiDungByCuocThi(cuocThi.getId());
+        CTQDService.deleteAllQuyDinhByCuocThi(cuocThi.getId());
 
         //Thêm lại các nội dung và quy định của cuộc thi
         for (Long noiDungId : selectedNoiDungIds) {

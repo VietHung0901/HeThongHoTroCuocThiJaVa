@@ -33,11 +33,13 @@
             <td th:text="${phieuDangKy.id}"></td>
             <td th:text="${phieuDangKy.cuocThi.getTenCuocThi()}"></td>
             <td th:text="${phieuDangKy.user.getHoten()}"></td>
-            <td th:text="${phieuDangKy.user.getEmail()}"></td>
-            <td th:text="${phieuDangKy.user.getPhone()}"></td>
-            <td th:text="${phieuDangKy.user.getTruong().getTenTruong()}"></td>
+            <td th:text="${phieuDangKy.getEmail()}"></td>
+            <td th:text="${phieuDangKy.getSdt()}"></td>
+            <td th:text="${truongService.findTruongById(phieuDangKy.getTruongId()).getTenTruong()}"></td>
             <td th:text="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)}"></td>
             <td>
+                <a class="btn btn-primary btn-dangky"
+                   th:href="@{/PhieuDangKys/edit/{id}(id=${phieuDangKy.id})}">Sửa</a>
                 <a class="btn btn-primary btn-dangky"
                    th:if="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)} == null"
                    th:href="@{/PhieuKetQuas/add/pkq/pdkId/{id}(id=${phieuDangKy.id})}">Nhập điểm</a>

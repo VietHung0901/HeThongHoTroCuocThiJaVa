@@ -42,6 +42,7 @@ public class PhieuDangKyService {
                 .orElseThrow(() -> new EntityNotFoundException("Truong not found with id"));
         phieuDangKy.setEmail(updatedPhieuDangKy.getEmail());
         phieuDangKy.setSdt(updatedPhieuDangKy.getSdt());
+        phieuDangKy.setTruongId(updatedPhieuDangKy.getTruongId());
         return phieuDangKyRepository.save(phieuDangKy);
     }
 
