@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -163,21 +163,28 @@ public class PhieuDangKyController {
     }
 
     @GetMapping("/search")
-    public String showSearchForm(Model model) {
-        return "PhieuDangKy/search";
+    public String showSearchForm(Principal principal, Model model) {
+        User user = userService.findByUsername(principal.getName());
+        List<PhieuDangKy> listPDK = phieuDangKyService.getPdkByUser(user);
+        if(listPDK != null)
+        {
+            model.addAttribute("phieuDangKys", listPDK);
+        }
+        else{
+            model.addAttribute("errorMessage", "Bạn chưa có phiếu đăng ký cuộc thi.");
+        }
+        return "PhieuDangKy/pdkSearch";
     }
 
-    @GetMapping("/search-result")
-    public String searchPhieuDangKy(@RequestParam("ngayThi") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayThi,
-                                    @RequestParam("cccd") String cccd,
-                                    Model model) {
-        List<PhieuDangKy> listPDK =  phieuDangKyService.findByUserCccdAndCuocThiNgayThi(cccd, ngayThi);
-        if (listPDK != null) {
-            model.addAttribute("phieuDangKys", listPDK);
-            return "PhieuDangKy/pdkSearch";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy kết quả tương ứng.");
-            return "PhieuDangKy/pdkSearch";
-        }
+    @GetMapping("/details/{id}")
+    public String detailsPhieuDangKy(@PathVariable Long id, Model model) {
+        PhieuDangKy phieuDangKy = phieuDangKyService.getPhieuDangKyById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Không tồn tại phiếu đăng ký có id: " + id));
+        model.addAttribute("phieuDangKy", phieuDangKy);
+        model.addAttribute("listTruong", truongService.getAllTruongsHien());
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        model.addAttribute("truongService", truongService);
+        return "PhieuDangKy/details";
     }
+
 }

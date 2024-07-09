@@ -79,13 +79,16 @@ public class PhieuDangKyService {
         return false;
     }
 
-    public List<PhieuDangKy> findByUserCccdAndCuocThiNgayThi(String cccd, Date ngayThi) {
+    public List<PhieuDangKy> getPdkByUser (User user)
+    {
         List<PhieuDangKy> listPDK = new ArrayList<>();
         for (PhieuDangKy pdk : getAllPhieuDangKys()) {
-            if (pdk.getCuocThi().getNgayThi().equals(ngayThi) && pdk.getUser().getCccd().equals(cccd)) {
+            if(pdk.getUser() == user)
+            {
                 listPDK.add(pdk);
             }
         }
         return listPDK;
     }
+
 }

@@ -14,8 +14,10 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="my-4">DANH SÁCH PHIẾU ĐĂNG KÝ</h1>
         <div>
-            <a class="btn btn-success mb-4" th:href="@{/PhieuKetQuas/cuocThiId/{id}(id=${cuocThiId})}">Kết quả chi tiết</a>
-            <a class="btn btn-info mb-4" th:href="@{/PhieuKetQuas/thongke/cuocThiId/{id}(id=${cuocThiId})}">Thống kê chi tiết</a>
+            <a class="btn btn-success mb-4" th:href="@{/PhieuKetQuas/cuocThiId/{id}(id=${cuocThiId})}">Kết quả chi
+                tiết</a>
+            <a class="btn btn-info mb-4" th:href="@{/PhieuKetQuas/thongke/cuocThiId/{id}(id=${cuocThiId})}">Thống kê chi
+                tiết</a>
         </div>
     </div>
     <div class="table-responsive">
@@ -45,14 +47,14 @@
                 <td th:text="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)}"></td>
                 <td>
 
-                        <a class="btn btn-primary btn-sm"
-                           th:href="@{/PhieuDangKys/edit/{id}(id=${phieuDangKy.id})}"> Sửa thông tin</a>
-                        <a class="btn btn-primary btn-sm"
-                           th:if="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)} == null"
-                           th:href="@{/PhieuKetQuas/add/pkq/pdkId/{id}(id=${phieuDangKy.id})}">Nhập điểm</a>
-                        <a class="btn btn-primary btn-sm"
-                           th:unless="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)} == null"
-                           th:href="@{/PhieuKetQuas/edit/pkq/pdkId/{id}(id=${phieuDangKy.id})}">Sửa điểm</a>
+                    <a class="btn btn-primary btn-sm"
+                       th:href="@{/PhieuDangKys/edit/{id}(id=${phieuDangKy.id})}"> Sửa thông tin</a>
+                    <a class="btn btn-primary btn-sm"
+                       th:if="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)} == null"
+                       th:href="@{/PhieuKetQuas/add/pkq/pdkId/{id}(id=${phieuDangKy.id})}">Nhập điểm</a>
+                    <a class="btn btn-primary btn-sm"
+                       th:unless="${phieuKetQuaService.getDiemByCuocThiIdvaUserId(phieuDangKy.cuocThi.id, phieuDangKy.user.id)} == null"
+                       th:href="@{/PhieuKetQuas/edit/pkq/pdkId/{id}(id=${phieuDangKy.id})}">Sửa điểm</a>
 
                 </td>
             </tr>

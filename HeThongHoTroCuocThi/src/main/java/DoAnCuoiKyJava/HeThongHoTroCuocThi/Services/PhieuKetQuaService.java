@@ -91,4 +91,16 @@ public class PhieuKetQuaService {
         phieuKetQuaRequest.setPhieuDangKy(phieuKetQua.getPhieuDangKy());
         return phieuKetQuaRequest;
     }
+
+    public List<PhieuKetQua> getPkqByUser (User user)
+    {
+        List<PhieuKetQua> listPKQ = new ArrayList<>();
+        for (PhieuKetQua pkq : getAllPhieuKetQua()) {
+            if(pkq.getPhieuDangKy().getUser() == user)
+            {
+                listPKQ.add(pkq);
+            }
+        }
+        return listPKQ;
+    }
 }
