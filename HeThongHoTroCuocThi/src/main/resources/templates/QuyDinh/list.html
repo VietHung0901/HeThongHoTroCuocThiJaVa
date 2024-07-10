@@ -40,3 +40,50 @@
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Bảng Quy Định</title>-->
+<!--    <style>-->
+<!--        #a1{-->
+<!--            margin: 20px 240px;-->
+
+<!--        }-->
+<!--        .table-container {-->
+<!--            display: flex;-->
+<!--            flex-wrap: wrap;-->
+<!--        }-->
+<!--        .table-item {-->
+<!--            flex: 1 1 calc(33.333% - 20px); /* 3 cột, trừ khoảng cách giữa các ô */-->
+<!--            box-sizing: border-box;-->
+<!--            margin:  10px;-->
+<!--            padding: 0px 20px;-->
+<!--            border: 1px solid #ddd;-->
+<!--            border-radius: 5px;-->
+<!--            text-align: center;-->
+<!--            width: calc(33.333% - 20px); /* Đảm bảo chiều rộng đúng */-->
+<!--            height: 300px; /* Chiều cao dài ra */-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: center;-->
+<!--        }-->
+<!--        .table-item img {-->
+<!--            width: 350px; /* Chiều rộng nhỏ lại */-->
+<!--            height: 250px;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="table-container" id="a1">-->
+<!--    <div class="table-item" th:each="quyDinh : ${quyDinhs}">-->
+<!--        <div>-->
+<!--            <img th:src="@{${quyDinh.getImageUrl()}}" alt="Ảnh">-->
+<!--        </div>-->
+<!--        <div th:text="${quyDinh.getTenQuyDinh}">Tên quy định</div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
