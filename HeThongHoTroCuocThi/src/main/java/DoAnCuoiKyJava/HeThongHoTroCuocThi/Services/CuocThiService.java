@@ -62,5 +62,8 @@ public class CuocThiService {
         return cuocThi;
     }
 
+    public int getTotalCuocThis() {
+        return cuocThiRepository.findAll().size(); // Đếm số lượng người dùng
+    }
 
 }

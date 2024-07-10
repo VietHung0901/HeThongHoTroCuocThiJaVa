@@ -2,6 +2,7 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Provider;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Role;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.LoaiTruong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
@@ -27,7 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -139,4 +143,16 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public int getTotalUsers() {
+        return userRepository.findAll().size(); // Đếm số lượng người dùng
+    }
+
+    // Example method to get user counts by LoaiTruong
+    public List<Object[]> getUserCountsByLoaiTruong() {
+        return userRepository.getUserCountsByLoaiTruong();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }

@@ -97,4 +97,10 @@ public class UserController {
         userService.saveUser(updateUser);
         return "redirect:/CuocThis/User";
     }
+
+    @GetMapping("/list")
+    public String showAllUser(@NotNull Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "User/list";
+    }
 }

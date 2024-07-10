@@ -74,4 +74,9 @@ public class PhieuDangKyService {
         }
         return false;
     }
+
+    public int getTotalPDKs() {
+        List<PhieuDangKy> allPhieuDangKys = phieuDangKyRepository.findAll();
+        return allPhieuDangKys.size();
+    }
 }
