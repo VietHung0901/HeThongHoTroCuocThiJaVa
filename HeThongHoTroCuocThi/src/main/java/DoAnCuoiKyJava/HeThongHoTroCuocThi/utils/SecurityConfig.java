@@ -47,15 +47,13 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/",
-                                "/oauth/**", "/register", "/error")
+                                "/oauth/**", "/register", "/error","/CuocThis/User")
                         .permitAll()
-                        .requestMatchers("/books/edit/**",
-                                "/books/add", "/books/delete")
+                        .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs")
                         .hasAnyAuthority("ADMIN")
-                        .requestMatchers("/books", "/cart", "/cart/**")
+                        .requestMatchers("/PhieuDangKys")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
-                        .requestMatchers("/api/**")
-                        .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
+                        .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()
                 ).logout(logout -> logout
                         .logoutUrl("/logout")

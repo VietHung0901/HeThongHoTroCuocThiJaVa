@@ -1,5 +1,7 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -26,10 +28,12 @@ public class Truong {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "loaitruong_id", referencedColumnName = "id")
     @ToString.Exclude
+    @JsonBackReference
     private LoaiTruong loaiTruong;
 
     @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonManagedReference
     private List<User> users = new ArrayList<>();
 
     private int trangThai;

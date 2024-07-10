@@ -6,17 +6,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initialscale=1.0">
-    <title>My App</title>
+    <title>MOS - Your Gateway to Academic Excellence</title>
     <link th:fragment="link-css" rel="stylesheet"
           th:href="@{/css/bootstrap.min.css}">
     <link th:fragment="custom-css" rel="stylesheet"
           th:href="@{/css/style.css}">
+    <style>
+        .icon-text {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column h-100">
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">HUTECH</a>
+            <a href="/" class="navbar-brand">
+<!--                <img th:src="@{/images/logoMOS.jpg}" alt="MOS Logo" height="50">-->
+                <span class="icon-text">M</span>
+                <span class="icon-text">O</span>
+                <span class="icon-text">S</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bstoggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent"
@@ -27,39 +42,65 @@
                  id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                           href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/">
+                            Trang chủ
+                        </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
-                        <a class="nav-link" href="/books">
-                            List Book
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/LoaiTruongs">
+                            Loại trường
                         </a>
                     </li>
                     <li class="nav-item"
                         sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a class="nav-link" href="/books/add">
-                            Add Book
+                        <a class="nav-link" href="/Truongs">
+                            Trường
                         </a>
                     </li>
-                    <li class="nav-item"
-                        sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a class="nav-link" href="/categories">
-                            list category
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/MonThis">
+                            Môn thi
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER', 'OIDC_USER')">
-                        <a class="nav-link" href="/cart">
-                            Cart
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/NoiDungs">
+                            Nội dung
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/QuyDinhs">
+                            Quy Định
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="nav-link" href="/CuocThis">
+                            Cuộc thi
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'OIDC_USER')">
+                        <a class="nav-link" href="/CuocThis/User">
+                            Cuộc thi
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-person-circle"></i>
+                            <span th:text="${#authentication.getName()}"></span>
                         </a>
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                        <span th:text="${#authentication.getName()}"></span>
-                        <form th:action="@{/logout}" method="post">
-                            <button class="btn btn-outline-danger" type="submit">Logout</button>
-                        </form>
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-person-circle"></i>
+                            <form th:action="@{/logout}" method="post">
+                                <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+                            </form>
+                        </a>
                     </li>
                     <li sec:authorize="!isAuthenticated()">
-                        <a class="btn btn-outline-primary" href="/login">
+                        <a class="nav-link btn btn-outline-light" href="/login">
+                            <i class="bi bi-box-arrow-in-right"></i>
                             Login
                         </a>
                     </li>
@@ -68,13 +109,19 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container my-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to MOS!</h1>
+        <p class="lead">Streamline your academic journey with our powerful management system.</p>
+        <hr class="my-4">
+        <p>Explore our features and discover how MOS can elevate your educational experience.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn More</a>
+    </div>
     <div th:fragment="content"></div>
 </div>
-<footer th:fragment="footer" class="footer mt-auto py-3 bg-light">
-    <div class="container text-center">Copyright &copy;
-        <span th:text="${#dates.year(#dates.createNow())}"></span>
-        <a href="https://www.hutech.edu.vn/">HUTECH Education</a>
+<footer th:fragment="footer" class="footer mt-auto py-3 bg-dark text-white">
+    <div class="container text-center">
+        <p>Powered by <a href="https://www.hutech.edu.vn/" class="text-white">HUTECH Education</a></p>
     </div>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/jquery-3.7.0.min.js}"></script>

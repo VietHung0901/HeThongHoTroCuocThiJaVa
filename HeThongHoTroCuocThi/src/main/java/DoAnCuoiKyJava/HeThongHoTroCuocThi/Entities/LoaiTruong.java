@@ -1,11 +1,12 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Objects;
 @Getter
 @Setter
@@ -26,6 +27,7 @@ public class LoaiTruong {
 
     @OneToMany(mappedBy = "loaiTruong", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonManagedReference
     private List<Truong> truongs = new ArrayList<>();
 
     private int trangThai;

@@ -10,9 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRequest {
+public class UserCreateRequest {
     private Long id;
     private String username;
+    private String hoten;
+    private String cccd;
     private String password;
     private String email;
     private String phone;
