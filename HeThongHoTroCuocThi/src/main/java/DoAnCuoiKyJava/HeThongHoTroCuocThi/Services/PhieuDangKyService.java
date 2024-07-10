@@ -91,4 +91,10 @@ public class PhieuDangKyService {
         return listPDK;
     }
 
+    public int getTotalPDKs() {
+        List<PhieuDangKy> allPhieuDangKys = phieuDangKyRepository.findAll();
+        return allPhieuDangKys.size();
+    }
+
+
 }

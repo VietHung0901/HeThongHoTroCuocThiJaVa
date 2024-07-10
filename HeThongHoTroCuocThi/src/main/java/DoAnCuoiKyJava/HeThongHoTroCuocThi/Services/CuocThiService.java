@@ -1,11 +1,17 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.ChiTietNoiDung;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.ICuocThiRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.CuocThiCreateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.time.ZoneId;
@@ -62,5 +68,46 @@ public class CuocThiService {
         return cuocThi;
     }
 
+    ///////////////////////
+    public List<CuocThi> searchByNgayThi(LocalDate startDate, LocalDate endDate) {
+        return cuocThiRepository.findByNgayThiBetweenOrderByNgayThi(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+    public List<CuocThi> searchByDiaDiemThi(String diaDiemThi) {
+        return cuocThiRepository.findByDiaDiemThiContainingIgnoreCase(diaDiemThi);
+    }
+    public List<CuocThi> searchCuocThi(LocalDate startDate, LocalDate endDate, String diaDiemThi) {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
+
+        if (diaDiemThi == null || diaDiemThi.isEmpty()) {
+            return cuocThiRepository.findByNgayThiBetweenOrderByNgayThi(startDateTime, endDateTime);
+        } else {
+            return cuocThiRepository.findByNgayThiBetweenAndDiaDiemThiContainingIgnoreCaseOrderByNgayThi(startDateTime, endDateTime, diaDiemThi);
+        }
+    }
+
+    public List<CuocThi> searchByMonThi (Long monThiId, List<CuocThi> list)
+    {
+        List<CuocThi> listCuocThi = new ArrayList<>();
+        for (CuocThi cuocThi : list) {
+            if(cuocThi.getMonThi().getId() == monThiId)
+                listCuocThi.add(cuocThi);
+        }
+        return listCuocThi;
+    }
+
+    public List<CuocThi> searchByLoaiTruong (Long loaiTruongId, List<CuocThi> list)
+    {
+        List<CuocThi> listCuocThi = new ArrayList<>();
+        for (CuocThi cuocThi : list) {
+            if(cuocThi.getLoaiTruongId() == loaiTruongId)
+                listCuocThi.add(cuocThi);
+        }
+        return listCuocThi;
+    }
+
+    public int getTotalCuocThis() {
+        return cuocThiRepository.findAll().size(); // Đếm số lượng người dùng
+    }
 
 }

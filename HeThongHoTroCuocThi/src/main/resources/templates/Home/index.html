@@ -4,22 +4,342 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initialscale=1.0">
-    <title>ỨNG DỤNG HỖ TRỢ CUỘC THI</title>
+    <title>ỨNG DỤNG QUẢN LÝ SÁCH</title>
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>.advertisement-qc {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        left: 0;
+        z-index: -1;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .page-selector-qc {
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .page-selector-qc button {
+        background-color: #7c8b9b;
+        border: none;
+        color: white;
+        width: 24px;
+        height: 8px;
+        cursor: pointer;
+    }
+
+    .page-selector-qc button:hover {
+        background-color: #537191;
+    }
+
+    .img-sticker img {
+        width: auto; /* Chiều rộng của hình ảnh là 100% của phần tử cha (img-sticker) */
+        height: 220px; /* Chiều cao tự động dựa trên tỷ lệ hình ảnh */
+    }
+
+    h3 {
+        font-family: BeVietnam-SemiBold\.ttf;
+        font-size: 18px;
+        line-height: 24px;
+        color: #393939;
+        -webkit-line-clamp: 2;
+        height: 52px;
+        height: auto;
+        max-height: 52px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    body {
+        /* background-image: url("../images/background.png"); */
+        background-size: cover;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+    }
+
+    nav {
+        display: flex;
+    }
+
+    #main-menu li {
+        position: relative;
+    }
+
+    .main-menu li a {
+        color: white;
+        display: block;
+        padding: 15px 20px;
+        text-decoration: none;
+    }
+
+    .main-menu ul.sub-menu {
+        position: absolute;
+        background-color: #164b9b;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 180px;
+        display: none;
+    }
+
+    .main-menu li:hover > ul.sub-menu {
+        display: block;
+    }
+
+    .main-menu ul.sub-menu a {
+        padding: 15px;
+    }
+
+    .main-menu ul.sub-menu li:hover {
+        background-color: #2360bb;
+    }
+
+    .main-menu > li > a {
+        position: relative;
+    }
+
+    .main-menu > li > a::before {
+        content: "";
+        height: 2px;
+        width: 0px;
+        background: #fff;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    .main-menu > li:hover > a::before {
+        width: 100%;
+    }
+
+    .main-menu > li.has-child::after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f107";
+        color: #fff;
+        position: absolute;
+        top: 0px;
+        padding-left: 0px;
+        padding: 23px 73px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #h_daterangepicker p {
+        margin: 0 5px;
+    }
+
+    section {
+        background-size: cover; /* Cover the entire section */
+        background-attachment: fixed; /* Fix the background position */
+        height: 100vh; /* Set height to 100% of viewport height */
+        position: relative;
+    }
+
+    .img-30 img {
+        width: 100%; /* Đảm bảo hình ảnh lấp đầy không gian của phần tử cha */
+        height: auto; /* Chiều cao tự động dựa trên tỷ lệ khung hình ban đầu */
+    }
+
+    .search-form {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .search-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-form .form-control {
+        margin-bottom: 10px;
+    }
+
+    .search-form .btn-primary {
+        width: 100%;
+    }
+    </style>
 </head>
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
-<div class="container my-5">
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                TRANG CHỦ ỨNG DỤNG QUẢN LÝ SÁCH - KẾT NỐI CSDL MYSQL
-            </a>
+<div class="wrapper">
+    <section class="section1">
+        <div class="container-qc">
+            <img
+                    class="advertisement-qc"
+                    src="../images/anh1.jpg"
+                    alt="Advertisement 1"
+            />
+            <img
+                    class="advertisement-qc"
+                    src="images/anh2.png"
+                    alt="Advertisement 2"
+            />
+            <img
+                    class="advertisement-qc"
+                    src="images/imagett.jpg"
+                    alt="Advertisement 3"
+            />
+            <img
+                    class="advertisement-qc"
+                    src="images/anh2.png"
+                    alt="Advertisement 4"
+            />
+            <img
+                    class="advertisement-qc"
+                    src="images/imagett.jpg"
+                    alt="Advertisement 5"
+            />
+            <!-- Thêm các hình ảnh quảng cáo khác cần hiển thị -->
+            <div class="page-selector-qc">
+                <button onclick="showAdvertisement(0)"></button>
+                <button onclick="showAdvertisement(1)"></button>
+                <button onclick="showAdvertisement(2)"></button>
+                <button onclick="showAdvertisement(3)"></button>
+                <button onclick="showAdvertisement(4)"></button>
+                <!-- Thêm các nút cho các trang khác nếu cần -->
+            </div>
         </div>
-    </nav>
+    </section>
+    <div class="search-form">
+        <h2>Tìm kiếm cuộc thi</h2>
+        <form action="/CuocThis/User/search" method="GET">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="startDate">Từ ngày:</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="endDate">Đến ngày:</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" placeholder="yyyy-MM-dd">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="location">Địa điểm:</label>
+                    <input type="text" class="form-control" id="location" name="location"
+                           placeholder="Nhập địa điểm thi">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="monThi">Môn thi:</label>
+                    <select id="monThi" class="form-control" name="monThi">
+                        <option value="-1">Chọn môn</option>
+                        <option th:each="monThi : ${monThis}" th:value="${monThi.id}"
+                                th:text="${monThi.tenMonThi}"></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="capThi">Cấp thi:</label>
+                    <select id="capThi" class="form-control" name="capThi">
+                        <option value="-1">Chọn cấp</option>
+                        <option th:each="loaiTruong : ${loaiTruongs}" th:value="${loaiTruong.id}"
+                                th:text="${loaiTruong.tenLoaiTruong}"></option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>Danh sách quy Định thi</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" th:each="quyDinh : ${quyDinhs}">
+                <a th:href="@{/QuyDinhs/id/{id}(id=${quyDinh.id})}" class="card mb-4 text-decoration-none text-dark">
+                    <img class="card-img-top" th:src="@{${quyDinh.imageUrl}}" alt="Quy định">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${quyDinh.tenQuyDinh}">Quy định phòng cháy chữa cháy</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".sub-menu").parent("li").addClass("has-child");
+    });
+    //
+    var advertisements = document.querySelectorAll(".advertisement-qc");
+    var currentPage = 0;
+
+    function showAdvertisement(pageIndex) {
+        if (pageIndex !== currentPage) {
+            advertisements[currentPage].style.opacity = "0";
+            advertisements[pageIndex].style.opacity = "1";
+            currentPage = pageIndex;
+        }
+    }
+
+    function nextAdvertisement() {
+        var nextPage = (currentPage + 1) % advertisements.length;
+        showAdvertisement(nextPage);
+    }
+
+    // Kiểm tra nếu có quảng cáo trong trang
+    if (advertisements.length > 0) {
+        // Hiển thị quảng cáo đầu tiên
+        advertisements[currentPage].style.opacity = "1";
+        setInterval(nextAdvertisement, 2000);
+    } else {
+        console.log("Không có quảng cáo nào được tìm thấy.");
+    }
+    window.addEventListener('DOMContentLoaded', function () {
+        const divs = document.querySelectorAll('.div-trai');
+        const interval = 2000; // 3 seconds
+        let index = 0;
+
+        function rotateDivs() {
+            divs.forEach(div => {
+                div.style.display = 'none'; // Ẩn tất cả các div
+            });
+
+            // Hiển thị chỉ 3 div mỗi lần
+            for (let i = index; i < index + 3; i++) {
+                if (i < divs.length) {
+                    divs[i].style.display = 'block';
+                } else {
+                    divs[i - divs.length].style.display = 'block';
+                }
+            }
+
+            index = (index + 1) % divs.length;
+        }
+
+        rotateDivs();
+        setInterval(rotateDivs, interval);
+    });
+</script>
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

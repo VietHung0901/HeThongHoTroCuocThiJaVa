@@ -157,6 +157,15 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public int getTotalUsers() {
+        return userRepository.findAll().size(); // Đếm số lượng người dùng
+    }
+
+    // Example method to get user counts by LoaiTruong
+    public List<Object[]> getUserCountsByLoaiTruong() {
+        return userRepository.getUserCountsByLoaiTruong();
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

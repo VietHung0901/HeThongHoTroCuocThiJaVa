@@ -9,13 +9,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,6 +40,8 @@ public class CuocThiController {
         model.addAttribute("cuocThis", cuocThiService.getAllCuocThis());
         model.addAttribute("loaiTruongService", loaiTruongService);
         model.addAttribute("phieuDangKyService", phieuDangKyService);
+        model.addAttribute("monThis", monThiService.getAllMonThis());
+        model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongs());
         return "CuocThi/list";
     }
 
@@ -44,6 +50,8 @@ public class CuocThiController {
         model.addAttribute("cuocThis", cuocThiService.getAllCuocThisHien());
         model.addAttribute("loaiTruongService", loaiTruongService);
         model.addAttribute("phieuDangKyService", phieuDangKyService);
+        model.addAttribute("monThis", monThiService.getAllMonThisHien());
+        model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongsHien());
         return "CuocThi/listUser";
     }
 
@@ -222,4 +230,138 @@ public class CuocThiController {
         model.addAttribute("loaiTruongService", loaiTruongService);
         return "CuocThi/details";
     }
+
+    //////////////
+    @GetMapping("/search")
+    public String searchCuocThi(
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            @RequestParam(name = "location", required = false) String diaDiemThi,
+            @RequestParam(name = "monThi", required = false) Long monThiId,
+            @RequestParam(name = "capThi", required = false) Long loaiTruongId,
+            Model model) {
+
+        List<CuocThi> results = cuocThiService.getAllCuocThis();
+
+        if (startDate == null && endDate == null && (diaDiemThi == null || diaDiemThi.isEmpty()) && monThiId == -1 && loaiTruongId == -1) {
+            model.addAttribute("cuocThis", results);
+            model.addAttribute("loaiTruongService", loaiTruongService);
+            model.addAttribute("phieuDangKyService", phieuDangKyService);
+            model.addAttribute("monThis", monThiService.getAllMonThis());
+            model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongs());
+            return "CuocThi/list";
+        }
+
+//        if (startDate == null) {
+//            startDate = LocalDate.MIN;
+//        }
+//        if (endDate == null) {
+//            endDate = LocalDate.MAX;
+//        }
+
+        try {
+
+            if (diaDiemThi != null && !diaDiemThi.isEmpty())
+            {
+                results = cuocThiService.searchByDiaDiemThi(diaDiemThi);
+
+            } else {
+                if (startDate != null && endDate != null && diaDiemThi != null && !diaDiemThi.isEmpty()) {
+                    results = cuocThiService.searchCuocThi(startDate, endDate, diaDiemThi);
+                }
+                if (startDate != null && endDate != null) {
+                    results = cuocThiService.searchByNgayThi(startDate, endDate);
+                }
+            }
+
+            Set<CuocThi> uniqueResults = new HashSet<>(results);
+            results = new ArrayList<>(uniqueResults);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Đã xảy ra lỗi khi tìm kiếm cuộc thi.");
+        }
+
+        if(monThiId != -1)
+        {
+            results = cuocThiService.searchByMonThi(monThiId, results);
+        }
+        if(loaiTruongId != -1)
+        {
+            results = cuocThiService.searchByLoaiTruong(loaiTruongId, results);
+        }
+
+        model.addAttribute("cuocThis", results);
+        model.addAttribute("monThis", monThiService.getAllMonThis());
+        model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongs());
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        model.addAttribute("phieuDangKyService", phieuDangKyService);
+        return "CuocThi/list";
+    }
+
+    @GetMapping("/User/search")
+    public String searchCuocThiChoUser(
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            @RequestParam(name = "location", required = false) String diaDiemThi,
+            @RequestParam(name = "monThi", required = false) Long monThiId,
+            @RequestParam(name = "capThi", required = false) Long loaiTruongId,
+            Model model) {
+
+        List<CuocThi> results = cuocThiService.getAllCuocThisHien();
+
+        if (startDate == null && endDate == null && (diaDiemThi == null || diaDiemThi.isEmpty()) && monThiId == -1 && loaiTruongId == -1) {
+            model.addAttribute("cuocThis", results);
+            model.addAttribute("loaiTruongService", loaiTruongService);
+            model.addAttribute("phieuDangKyService", phieuDangKyService);
+            model.addAttribute("monThis", monThiService.getAllMonThisHien());
+            model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongsHien());
+            return "CuocThi/listUser";
+        }
+
+        if (startDate == null) {
+            startDate = LocalDate.MIN;
+        }
+        if (endDate == null) {
+            endDate = LocalDate.MAX;
+        }
+
+        try {
+
+            if (diaDiemThi != null && !diaDiemThi.isEmpty())
+            {
+                results = cuocThiService.searchByDiaDiemThi(diaDiemThi);
+
+            } else {
+                if (startDate != null && endDate != null && diaDiemThi != null && !diaDiemThi.isEmpty()) {
+                    results = cuocThiService.searchCuocThi(startDate, endDate, diaDiemThi);
+                }
+                if (startDate != null && endDate != null) {
+                    results = cuocThiService.searchByNgayThi(startDate, endDate);
+                }
+            }
+
+            Set<CuocThi> uniqueResults = new HashSet<>(results);
+            results = new ArrayList<>(uniqueResults);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Đã xảy ra lỗi khi tìm kiếm cuộc thi.");
+        }
+
+        if(monThiId != -1)
+        {
+            results = cuocThiService.searchByMonThi(monThiId, results);
+        }
+        if(loaiTruongId != -1)
+        {
+            results = cuocThiService.searchByLoaiTruong(loaiTruongId, results);
+        }
+
+        model.addAttribute("cuocThis", results);
+        model.addAttribute("monThis", monThiService.getAllMonThisHien());
+        model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongsHien());
+        model.addAttribute("loaiTruongService", loaiTruongService);
+        model.addAttribute("phieuDangKyService", phieuDangKyService);
+        return "CuocThi/listUser";
+    }
+
 }
