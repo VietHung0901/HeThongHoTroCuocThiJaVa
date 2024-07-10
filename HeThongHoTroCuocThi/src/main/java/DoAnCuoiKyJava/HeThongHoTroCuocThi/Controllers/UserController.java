@@ -2,9 +2,11 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.UserCreateRequest;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.UserUpdateRequest;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.TruongService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Viewmodels.UserGetVM;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -85,14 +87,14 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String saveEditedUser(@ModelAttribute("user") User editedUser, RedirectAttributes redirectAttributes) {
-        User savedUser = userService.saveUser(editedUser);
-        if (savedUser != null) {
-            redirectAttributes.addAttribute("success", true);
-        } else {
-            redirectAttributes.addAttribute("error", true);
+    public String saveEditedUser(@Valid @ModelAttribute("user") UserUpdateRequest updateUser,
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addAttribute("error", "Validation errors occurred");
+            return "redirect:/User/edit";
         }
-        return "redirect:/User/edit";
-    }
 
+        userService.saveUser(updateUser);
+        return "redirect:/CuocThis/User";
+    }
 }
