@@ -2,10 +2,12 @@ package DoAnCuoiKyJava.HeThongHoTroCuocThi.Services;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Provider;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Constant.Role;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.CuocThi;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.PhieuDangKy;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IRoleRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IUserRepository;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -89,22 +92,72 @@ public class UserService implements UserDetailsService {
     }
 
     //Hàm lưu ảnh vào local
+//    public String saveImage(MultipartFile file) {
+//        // Lấy tên file
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//
+//        // Đường dẫn lưu file
+//        String uploadDir = "src/main/resources/static/images/";
+//        Path filePath = Paths.get(uploadDir, fileName);
+//
+//        try {
+//            // Lưu file vào thư mục
+//            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {
+//            throw new RuntimeException("Could not save file: " + fileName, e);
+//        }
+//
+//        // Trả về đường dẫn của file đã lưu
+//        return "/images/" + fileName;
+//    }
+
+    //Hàm lưu ảnh vào local
     public String saveImage(MultipartFile file) {
         // Lấy tên file
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         // Đường dẫn lưu file
         String uploadDir = "src/main/resources/static/images/";
-        Path filePath = Paths.get(uploadDir, fileName);
+        Path uploadPath = Paths.get(uploadDir);
+        Path filePath = uploadPath.resolve(fileName);
 
         try {
+            // Tạo thư mục nếu không tồn tại
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
             // Lưu file vào thư mục
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException("Could not save file: " + fileName, e);
         }
-
         // Trả về đường dẫn của file đã lưu
         return "/images/" + fileName;
+    }
+
+
+    public void saveUser(UserUpdateRequest updatedUser) {
+        User user = findById(updatedUser.getId());
+        Boolean a = user != null;
+        if (a) {
+            user.setCccd(updatedUser.getCccd());
+            user.setHoten(updatedUser.getHoten());
+            user.setEmail(updatedUser.getEmail());
+            user.setPhone(updatedUser.getPhone());
+            if (updatedUser.getImageUrl() != null) {
+                String images = saveImage(updatedUser.getImageUrl());
+                user.setImageUrl(images);
+            }
+            user.setTruong(updatedUser.getTruong());
+            userRepository.save(user);
+            User user1 = findById(user.getId());
+
+        }
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

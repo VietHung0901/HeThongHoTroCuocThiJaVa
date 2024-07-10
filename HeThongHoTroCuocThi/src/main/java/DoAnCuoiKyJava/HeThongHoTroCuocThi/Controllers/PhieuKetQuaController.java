@@ -6,6 +6,7 @@ import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.CuocThiService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuDangKyService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuKetQuaService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Viewmodels.PhieuKetQuaGetVm;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Viewmodels.UserGetVM;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -101,17 +102,31 @@ public class PhieuKetQuaController {
         return "PhieuKetQua/thongke";
     }
 
-    @GetMapping("/search")
-    public String showSearchForm(Principal principal, Model model) {
-        User user = userService.findByUsername(principal.getName());
-        List<PhieuKetQua> listPKQ = phieuKetQuaService.getPkqByUser(user);
-        if(listPKQ != null)
-        {
-            model.addAttribute("phieuKetQuas", listPKQ);
-        }
-        else{
-            model.addAttribute("errorMessage", "Chưa có kết quả cuộc thi!");
-        }
+//    @GetMapping("/search")
+//    public String showSearchForm(Principal principal, Model model) {
+//        User user = userService.findByUsername(principal.getName());
+//        List<PhieuKetQua> listPKQ = phieuKetQuaService.getPkqByUser(user);
+//        if(listPKQ != null)
+//        {
+//            model.addAttribute("phieuKetQuas", listPKQ);
+//        }
+//        else{
+//            model.addAttribute("errorMessage", "Chưa có kết quả cuộc thi!");
+//        }
+//        return "PhieuKetQua/search";
+//    }
+
+        @GetMapping("/search")
+    public String showSearchForm() {
         return "PhieuKetQua/search";
+    }
+
+    //API lấy thông tin phiếu kết quả
+    @GetMapping("/search/{pdkId}")
+    public ResponseEntity<PhieuKetQuaGetVm> getPhieuKetQuaByPdkIdAndUserId (@PathVariable Long pdkId) {
+        PhieuDangKy phieuDangKy = phieuDangKyService.getPhieuDangKyById(pdkId).orElseThrow(() -> new EntityNotFoundException(""));
+        return ResponseEntity.ok(phieuKetQuaService.findByPhieuDangKy(phieuDangKy)
+                .map(PhieuKetQuaGetVm::from)
+                .orElse(null));
     }
 }

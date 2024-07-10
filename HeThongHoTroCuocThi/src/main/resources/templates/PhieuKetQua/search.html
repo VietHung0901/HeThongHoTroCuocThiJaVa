@@ -12,39 +12,35 @@
 <div class="container my-5">
     <h2 class="mb-4">Danh sách phiếu kết quả</h2>
 
-    <div th:if="${phieuKetQuas != null}">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Mã phiếu</th>
-                <th>CCCD</th>
-                <th>Họ và tên</th>
-                <th>Trường</th>
-                <th>Điểm</th>
-                <th>Thời gian</th>
-                <th>Thao tác</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="phieuKetQua : ${phieuKetQuas}">
-                <td th:text="${phieuKetQua.id}"></td>
-                <td th:text="${phieuKetQua.phieuDangKy.user.cccd}"></td>
-                <td th:text="${phieuKetQua.phieuDangKy.user.getHoten()}"></td>
-                <td th:text="${phieuKetQua.phieuDangKy.user.getTruong().getTenTruong()}"></td>
-                <td th:text="${phieuKetQua.diem}"></td>
-                <td th:text="${phieuKetQua.phut} + ':' + ${phieuKetQua.giay}"></td>
-                <td>
-                    <a class="btn btn-primary btn-sm"
-                       th:href="@{/PhieuKetQuas/cuocThiId/{id}(id=${phieuKetQua.phieuDangKy.cuocThi.id})}">kết quả cuộc thi</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="form-group">
+        <p>Điền cccd và mã phiếu đăng ký để tra kết quả của bạn.</p>
+        <div class="input-group">
+            <input type="text" class="form-control" id="cccd" required placeholder="Nhập cccd">
+            <input type="text" class="form-control" id="pdkId" required placeholder="Nhập mã phiếu đăng ký">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary" onclick="searchPQK()">Xác nhận</button>
+            </div>
+        </div>
+        <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}"
+             style="margin-top: 20px; margin-bottom: 20px;"></div>
     </div>
 
-    <div th:if="${errorMessage != null}" class="alert alert-danger" th:text="${errorMessage}"
-         style="margin-top: 20px; margin-bottom: 20px;"></div>
+    <table class="table">
+        <tr>
+            <th>Mã phiếu</th>
+            <th>Cuộc thi</th>
+            <th>CCCD</th>
+            <th>Họ và tên</th>
+            <th>Trường</th>
+            <th>Điểm</th>
+            <th>Thời gian</th>
+            <th>Thao tác</th>
+        </tr>
+        <tbody id="pkq-table-body">
+        </tbody>
+    </table>
 </div>
 <th:block th:replace="~{layout::footer}"></th:block>
+<script th:src="@{/js/searchPKQ.js}"></script>
 </body>
 </html>

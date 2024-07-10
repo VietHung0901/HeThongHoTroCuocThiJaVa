@@ -1,6 +1,5 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Viewmodels;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.Truong;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

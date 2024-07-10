@@ -51,7 +51,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs", "/PhieuKetQuas/add")
                         .hasAnyAuthority("ADMIN")
-                        .requestMatchers("/PhieuDangKys")
+                        .requestMatchers("/PhieuDangKys", "/PhieuKetQuas/search/")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()

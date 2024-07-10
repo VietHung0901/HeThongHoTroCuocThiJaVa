@@ -103,4 +103,10 @@ public class PhieuKetQuaService {
         }
         return listPKQ;
     }
+
+    public Optional<PhieuKetQua>  findByPhieuDangKy (PhieuDangKy phieuDangKy)
+    {
+        return phieuKetQuaRepository.findByPhieuDangKy(phieuDangKy);
+    }
+
 }
