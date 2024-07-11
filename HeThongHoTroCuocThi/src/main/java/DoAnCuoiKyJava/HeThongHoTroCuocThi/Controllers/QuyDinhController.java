@@ -70,7 +70,7 @@ public class QuyDinhController {
 
     @PostMapping("/edit")
     public String updateQuyDinh(@Valid @ModelAttribute("QuyDinh") QuyDinh quyDinh,
-                                @RequestParam(value = "imageUrlFile", required = false) MultipartFile imageUrl,
+                                @RequestParam(value = "imageUrlFile", required = false) MultipartFile imageUrlFile,
                                 @NotNull BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
@@ -83,10 +83,10 @@ public class QuyDinhController {
             return "QuyDinh/edit";
         }
 
-        if(imageUrl != null)
-        {
-            quyDinh.setImageUrl(quyDinhService.saveImage(imageUrl));
-        }
+        String fileName = imageUrlFile.getOriginalFilename();
+        if(fileName != "")
+            quyDinh.setImageUrl(quyDinhService.saveImage(imageUrlFile));
+
         quyDinhService.updateQuyDinh(quyDinh);
         return "redirect:/QuyDinhs";
     }

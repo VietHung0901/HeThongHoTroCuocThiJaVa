@@ -11,12 +11,4 @@ import java.util.List;
 public interface ICuocThiRepository extends JpaRepository<CuocThi, Long> {
     //Xuất các loại trường đang không bị ẩn
     List<CuocThi> findByTrangThai(int trangThai);
-
-    //////
-    List<CuocThi> findByNgayThiBetweenOrderByNgayThi(LocalDateTime startDate, LocalDateTime endDate);
-    List<CuocThi> findByDiaDiemThiContainingIgnoreCase(String diaDiemThi);
-
-    // Tìm kiếm cuộc thi theo khoảng thời gian và địa điểm
-    List<CuocThi> findByNgayThiBetweenAndDiaDiemThiContainingIgnoreCaseOrderByNgayThi(LocalDateTime startDate, LocalDateTime endDate, String diaDiemThi);
-
 }

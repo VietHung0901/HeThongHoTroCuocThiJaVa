@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <div class="form-group mb-4">
-                <label for="imageUrl" class="text-start">Ảnh</label>
+                <label for="imageUrltext" class="text-start">Ảnh</label>
                 <input type="hidden" class="form-control form-control-lg" required id="imageUrltext" th:field="*{imageUrl}">
                 <input type="file" class="form-control form-control-lg" id="imageUrl" onchange="previewImage()" name="imageUrlFile">
                 <img id="preview-image" th:src="@{${noiDung.imageUrl}}" alt="Preview Image" class="img-fluid mb-3" style="display: block;">

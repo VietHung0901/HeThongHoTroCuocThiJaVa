@@ -68,7 +68,7 @@ public class NoiDungController {
 
     @PostMapping("/edit")
     public String updateNoiDung(@Valid @ModelAttribute("NoiDung") NoiDung noiDung,
-                                @RequestParam(value = "imageUrlFile", required = false) MultipartFile imageUrl,
+                                @RequestParam(value = "imageUrlFile", required = false) MultipartFile imageUrlFile,
                                 @NotNull BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
@@ -81,10 +81,10 @@ public class NoiDungController {
             return "NoiDung/edit";
         }
 
-        if(imageUrl != null)
-        {
-            noiDung.setImageUrl(noiDungService.saveImage(imageUrl));
-        }
+        String fileName = imageUrlFile.getOriginalFilename();
+        if(fileName != "")
+            noiDung.setImageUrl(noiDungService.saveImage(imageUrlFile));
+
         noiDungService.updateNoiDung(noiDung);
         return "redirect:/NoiDungs";
     }
