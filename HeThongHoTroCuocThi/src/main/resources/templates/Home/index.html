@@ -41,24 +41,6 @@
             background-color: #537191;
         }
 
-        .img-sticker img {
-            width: auto;
-            height: 220px;
-        }
-
-        h3 {
-            font-family: BeVietnam-SemiBold\.ttf;
-            font-size: 18px;
-            line-height: 24px;
-            color: #393939;
-            -webkit-line-clamp: 2;
-            height: 52px;
-            height: auto;
-            max-height: 52px;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
         footer {
             background-color: #333;
             color: #fff;
@@ -75,92 +57,11 @@
             font-size: 15px;
         }
 
-        nav {
-            display: flex;
-        }
-
-        #main-menu li {
-            position: relative;
-        }
-
-        .main-menu li a {
-            color: white;
-            display: block;
-            padding: 15px 20px;
-            text-decoration: none;
-        }
-
-        .main-menu ul.sub-menu {
-            position: absolute;
-            background-color: #164b9b;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            width: 180px;
-            display: none;
-        }
-
-        .main-menu li:hover > ul.sub-menu {
-            display: block;
-        }
-
-        .main-menu ul.sub-menu a {
-            padding: 15px;
-        }
-
-        .main-menu ul.sub-menu li:hover {
-            background-color: #2360bb;
-        }
-
-        .main-menu > li > a {
-            position: relative;
-        }
-
-        .main-menu > li > a::before {
-            content: "";
-            height: 2px;
-            width: 0px;
-            background: #fff;
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
-        }
-
-        .main-menu > li:hover > a::before {
-            width: 100%;
-        }
-
-        .main-menu > li.has-child::after {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            content: "\f107";
-            color: #fff;
-            position: absolute;
-            top: 0px;
-            padding-left: 0px;
-            padding: 23px 73px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        #h_daterangepicker p {
-            margin: 0 5px;
-        }
-
         section {
             background-size: cover; /* Cover the entire section */
             background-attachment: fixed; /* Fix the background position */
             height: 100vh; /* Set height to 100% of viewport height */
             position: relative;
-        }
-
-        .img-30 img {
-            width: 100%; /* Đảm bảo hình ảnh lấp đầy không gian của phần tử cha */
-            height: auto; /* Chiều cao tự động dựa trên tỷ lệ khung hình ban đầu */
         }
 
         .search-form {
@@ -191,19 +92,17 @@
 <div class="wrapper">
     <section class="section1">
         <div class="container-qc">
-            <img class="advertisement-qc" src="../images/anh1.jpg" alt="Advertisement 1"/>
-            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 2"/>
-            <img class="advertisement-qc" src="../images/imagett.jpg" alt="Advertisement 3"/>
-            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 4"/>
-            <img class="advertisement-qc" src="../images/imagett2.jpg" alt="Advertisement 5"/>
-            <!-- Thêm các hình ảnh quảng cáo khác cần hiển thị -->
+            <img class="advertisement-qc" src="../images/anh1.jpg" alt="Advertisement 1" style="display: block;">
+            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 2" style="display: none;">
+            <img class="advertisement-qc" src="../images/imagett.jpg" alt="Advertisement 3" style="display: none;">
+            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 4" style="display: none;">
+            <img class="advertisement-qc" src="../images/imagett2.png" alt="Advertisement 5" style="display: none;">
             <div class="page-selector-qc">
-                <button onclick="showAdvertisement(0)"></button>
+                <button onclick="showAdvertisement(0)" class="active"></button>
                 <button onclick="showAdvertisement(1)"></button>
                 <button onclick="showAdvertisement(2)"></button>
                 <button onclick="showAdvertisement(3)"></button>
                 <button onclick="showAdvertisement(4)"></button>
-                <!-- Thêm các nút cho các trang khác nếu cần -->
             </div>
         </div>
     </section>
@@ -255,7 +154,9 @@
         <div class="row">
             <div class="col-md-4" th:each="quyDinh : ${quyDinhs}">
                 <a th:href="@{/QuyDinhs/id/{id}(id=${quyDinh.id})}" class="card mb-4 text-decoration-none text-dark">
-                    <img class="card-img-top" th:src="@{${quyDinh.imageUrl}}" alt="Quy định">
+                    <div class="card-img-top" style="height: 200px; overflow: hidden;">
+                        <img th:src="@{${quyDinh.imageUrl}}" alt="Quy định" class="img-fluid h-100 w-100 object-fit-cover">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${quyDinh.tenQuyDinh}">Quy định phòng cháy chữa cháy</h5>
                     </div>
@@ -264,60 +165,27 @@
         </div>
     </div>
 </div>
+
 <script>
-    $(document).ready(function () {
-        $(".sub-menu").parent("li").addClass("has-child");
-    });
-    //
-    var advertisements = document.querySelectorAll(".advertisement-qc");
-    var currentPage = 0;
+    let currentIndex = 0;
+    const advertisements = document.querySelectorAll('.advertisement-qc');
+    const buttons = document.querySelectorAll('.page-selector-qc button');
 
-    function showAdvertisement(pageIndex) {
-        if (pageIndex !== currentPage) {
-            advertisements[currentPage].style.opacity = "0";
-            advertisements[pageIndex].style.opacity = "1";
-            currentPage = pageIndex;
-        }
+    function showAdvertisement(index) {
+        advertisements[currentIndex].style.display = 'none';
+        buttons[currentIndex].classList.remove('active');
+
+        currentIndex = index;
+        advertisements[currentIndex].style.display = 'block';
+        buttons[currentIndex].classList.add('active');
     }
 
-    function nextAdvertisement() {
-        var nextPage = (currentPage + 1) % advertisements.length;
-        showAdvertisement(nextPage);
+    function rotateAdvertisements() {
+        showAdvertisement((currentIndex + 1) % advertisements.length);
+        setTimeout(rotateAdvertisements, 5000); // Chuyển sang quảng cáo tiếp theo sau 5 giây
     }
 
-    // Kiểm tra nếu có quảng cáo trong trang
-    if (advertisements.length > 0) {
-        // Hiển thị quảng cáo đầu tiên
-        advertisements[currentPage].style.opacity = "1";
-        setInterval(nextAdvertisement, 2000);
-    } else {
-        console.log("Không có quảng cáo nào được tìm thấy.");
-    }
-    window.addEventListener('DOMContentLoaded', function () {
-        const divs = document.querySelectorAll('.div-trai');
-        const interval = 2000; // 3 seconds
-        let index = 0;
-
-        function rotateDivs() {
-            divs.forEach(div => {
-                div.style.display = 'none'; // Ẩn tất cả các div
-            });
-
-            // Hiển thị chỉ 3 div mỗi lần
-            for (let i = index; i < index + 3; i++) {
-                if (i < divs.length) {
-                    divs[i].style.display = 'block';
-                } else {
-                    divs[i - divs.length].style.display = 'block';
-                }
-            }
-
-            index = (index + 1) % divs.length;
-        }
-
-        rotateDivs();
-        setInterval(rotateDivs, interval);
-    });
+    rotateAdvertisements();
 </script>
 <th:block th:replace="~{layout::footer}"></th:block>
 <script th:src="@{/js/setEndday.js}"></script>
