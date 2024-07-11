@@ -47,7 +47,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/",
-                                "/oauth/**", "/register", "/error","/CuocThis/User")
+                                "/oauth/**", "/register", "/error","/CuocThis/User", "/QuyDinhs")
                         .permitAll()
                         .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs", "/PhieuKetQuas/add")
                         .hasAnyAuthority("ADMIN")

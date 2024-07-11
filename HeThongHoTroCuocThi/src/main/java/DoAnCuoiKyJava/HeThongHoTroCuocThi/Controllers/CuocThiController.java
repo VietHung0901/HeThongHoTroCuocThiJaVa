@@ -252,39 +252,21 @@ public class CuocThiController {
             return "CuocThi/list";
         }
 
-//        if (startDate == null) {
-//            startDate = LocalDate.MIN;
-//        }
-//        if (endDate == null) {
-//            endDate = LocalDate.MAX;
-//        }
+        if(startDate != null && endDate != null)
+        {
+            results = cuocThiService.searchByNgayThi(startDate, endDate, results);
+        }
 
-        try {
-
-            if (diaDiemThi != null && !diaDiemThi.isEmpty())
-            {
-                results = cuocThiService.searchByDiaDiemThi(diaDiemThi);
-
-            } else {
-                if (startDate != null && endDate != null && diaDiemThi != null && !diaDiemThi.isEmpty()) {
-                    results = cuocThiService.searchCuocThi(startDate, endDate, diaDiemThi);
-                }
-                if (startDate != null && endDate != null) {
-                    results = cuocThiService.searchByNgayThi(startDate, endDate);
-                }
-            }
-
-            Set<CuocThi> uniqueResults = new HashSet<>(results);
-            results = new ArrayList<>(uniqueResults);
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Đã xảy ra lỗi khi tìm kiếm cuộc thi.");
+        if(diaDiemThi != null)
+        {
+            results = cuocThiService.searchByDiadime(diaDiemThi, results);
         }
 
         if(monThiId != -1)
         {
             results = cuocThiService.searchByMonThi(monThiId, results);
         }
+
         if(loaiTruongId != -1)
         {
             results = cuocThiService.searchByLoaiTruong(loaiTruongId, results);
@@ -309,7 +291,7 @@ public class CuocThiController {
 
         List<CuocThi> results = cuocThiService.getAllCuocThisHien();
 
-        if (startDate == null && endDate == null && (diaDiemThi == null || diaDiemThi.isEmpty()) && monThiId == -1 && loaiTruongId == -1) {
+        if ((startDate == null || endDate == null) && diaDiemThi == null  && monThiId == -1 && loaiTruongId == -1) {
             model.addAttribute("cuocThis", results);
             model.addAttribute("loaiTruongService", loaiTruongService);
             model.addAttribute("phieuDangKyService", phieuDangKyService);
@@ -318,39 +300,21 @@ public class CuocThiController {
             return "CuocThi/listUser";
         }
 
-        if (startDate == null) {
-            startDate = LocalDate.MIN;
-        }
-        if (endDate == null) {
-            endDate = LocalDate.MAX;
+        if(startDate != null && endDate != null)
+        {
+            results = cuocThiService.searchByNgayThi(startDate, endDate, results);
         }
 
-        try {
-
-            if (diaDiemThi != null && !diaDiemThi.isEmpty())
-            {
-                results = cuocThiService.searchByDiaDiemThi(diaDiemThi);
-
-            } else {
-                if (startDate != null && endDate != null && diaDiemThi != null && !diaDiemThi.isEmpty()) {
-                    results = cuocThiService.searchCuocThi(startDate, endDate, diaDiemThi);
-                }
-                if (startDate != null && endDate != null) {
-                    results = cuocThiService.searchByNgayThi(startDate, endDate);
-                }
-            }
-
-            Set<CuocThi> uniqueResults = new HashSet<>(results);
-            results = new ArrayList<>(uniqueResults);
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Đã xảy ra lỗi khi tìm kiếm cuộc thi.");
+        if(diaDiemThi != null)
+        {
+            results = cuocThiService.searchByDiadime(diaDiemThi, results);
         }
 
         if(monThiId != -1)
         {
             results = cuocThiService.searchByMonThi(monThiId, results);
         }
+
         if(loaiTruongId != -1)
         {
             results = cuocThiService.searchByLoaiTruong(loaiTruongId, results);

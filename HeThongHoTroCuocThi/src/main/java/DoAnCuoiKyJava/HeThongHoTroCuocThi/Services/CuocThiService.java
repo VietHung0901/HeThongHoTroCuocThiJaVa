@@ -68,22 +68,26 @@ public class CuocThiService {
         return cuocThi;
     }
 
-    ///////////////////////
-    public List<CuocThi> searchByNgayThi(LocalDate startDate, LocalDate endDate) {
-        return cuocThiRepository.findByNgayThiBetweenOrderByNgayThi(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
-    }
-    public List<CuocThi> searchByDiaDiemThi(String diaDiemThi) {
-        return cuocThiRepository.findByDiaDiemThiContainingIgnoreCase(diaDiemThi);
-    }
-    public List<CuocThi> searchCuocThi(LocalDate startDate, LocalDate endDate, String diaDiemThi) {
-        LocalDateTime startDateTime = startDate.atStartOfDay();
-        LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
-
-        if (diaDiemThi == null || diaDiemThi.isEmpty()) {
-            return cuocThiRepository.findByNgayThiBetweenOrderByNgayThi(startDateTime, endDateTime);
-        } else {
-            return cuocThiRepository.findByNgayThiBetweenAndDiaDiemThiContainingIgnoreCaseOrderByNgayThi(startDateTime, endDateTime, diaDiemThi);
+    public List<CuocThi> searchByNgayThi(LocalDate startDate, LocalDate endDate, List<CuocThi> list) {
+        List<CuocThi> listCuocThi = new ArrayList<>();
+        for (CuocThi cuocThi : list) {
+            LocalDate cuocThiDate = cuocThi.getNgayThi().toLocalDate();
+            if (cuocThiDate.compareTo(startDate) >= 0 && cuocThiDate.compareTo(endDate) <= 0) {
+                listCuocThi.add(cuocThi);
+            }
         }
+        return listCuocThi;
+    }
+
+    public List<CuocThi> searchByDiadime (String diadiem, List<CuocThi> list)
+    {
+        List<CuocThi> listCuocThi = new ArrayList<>();
+        for (CuocThi cuocThi : list) {
+            if (cuocThi.getDiaDiemThi().contains(diadiem)) {
+                listCuocThi.add(cuocThi);
+            }
+        }
+        return listCuocThi;
     }
 
     public List<CuocThi> searchByMonThi (Long monThiId, List<CuocThi> list)
@@ -107,7 +111,7 @@ public class CuocThiService {
     }
 
     public int getTotalCuocThis() {
-        return cuocThiRepository.findAll().size(); // Đếm số lượng người dùng
+        return cuocThiRepository.findAll().size();
     }
 
 }

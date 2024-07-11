@@ -4,186 +4,186 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initialscale=1.0">
-    <title>ỨNG DỤNG QUẢN LÝ SÁCH</title>
+    <title>HỆ THỐNG HỖ TRỢ CUỘC THI</title>
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>.advertisement-qc {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        position: absolute;
-        left: 0;
-        z-index: -1;
-        opacity: 1;
-        transition: opacity 0.5s ease;
-    }
+    <style>
+        .advertisement-qc {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            left: 0;
+            z-index: -1;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
 
-    .page-selector-qc {
-        position: absolute;
-        bottom: 60px;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-    }
+        .page-selector-qc {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
 
-    .page-selector-qc button {
-        background-color: #7c8b9b;
-        border: none;
-        color: white;
-        width: 24px;
-        height: 8px;
-        cursor: pointer;
-    }
+        .page-selector-qc button {
+            background-color: #7c8b9b;
+            border: none;
+            color: white;
+            width: 24px;
+            height: 8px;
+            cursor: pointer;
+        }
 
-    .page-selector-qc button:hover {
-        background-color: #537191;
-    }
+        .page-selector-qc button:hover {
+            background-color: #537191;
+        }
 
-    .img-sticker img {
-        width: auto; /* Chiều rộng của hình ảnh là 100% của phần tử cha (img-sticker) */
-        height: 220px; /* Chiều cao tự động dựa trên tỷ lệ hình ảnh */
-    }
+        .img-sticker img {
+            width: auto;
+            height: 220px;
+        }
 
-    h3 {
-        font-family: BeVietnam-SemiBold\.ttf;
-        font-size: 18px;
-        line-height: 24px;
-        color: #393939;
-        -webkit-line-clamp: 2;
-        height: 52px;
-        height: auto;
-        max-height: 52px;
-        margin-bottom: 10px;
-        text-align: left;
-    }
+        h3 {
+            font-family: BeVietnam-SemiBold\.ttf;
+            font-size: 18px;
+            line-height: 24px;
+            color: #393939;
+            -webkit-line-clamp: 2;
+            height: 52px;
+            height: auto;
+            max-height: 52px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
 
-    footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
 
-    body {
-        /* background-image: url("../images/background.png"); */
-        background-size: cover;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 15px;
-    }
+        body {
+            background-size: cover;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 15px;
+        }
 
-    nav {
-        display: flex;
-    }
+        nav {
+            display: flex;
+        }
 
-    #main-menu li {
-        position: relative;
-    }
+        #main-menu li {
+            position: relative;
+        }
 
-    .main-menu li a {
-        color: white;
-        display: block;
-        padding: 15px 20px;
-        text-decoration: none;
-    }
+        .main-menu li a {
+            color: white;
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+        }
 
-    .main-menu ul.sub-menu {
-        position: absolute;
-        background-color: #164b9b;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 180px;
-        display: none;
-    }
+        .main-menu ul.sub-menu {
+            position: absolute;
+            background-color: #164b9b;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 180px;
+            display: none;
+        }
 
-    .main-menu li:hover > ul.sub-menu {
-        display: block;
-    }
+        .main-menu li:hover > ul.sub-menu {
+            display: block;
+        }
 
-    .main-menu ul.sub-menu a {
-        padding: 15px;
-    }
+        .main-menu ul.sub-menu a {
+            padding: 15px;
+        }
 
-    .main-menu ul.sub-menu li:hover {
-        background-color: #2360bb;
-    }
+        .main-menu ul.sub-menu li:hover {
+            background-color: #2360bb;
+        }
 
-    .main-menu > li > a {
-        position: relative;
-    }
+        .main-menu > li > a {
+            position: relative;
+        }
 
-    .main-menu > li > a::before {
-        content: "";
-        height: 2px;
-        width: 0px;
-        background: #fff;
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+        .main-menu > li > a::before {
+            content: "";
+            height: 2px;
+            width: 0px;
+            background: #fff;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
 
-    .main-menu > li:hover > a::before {
-        width: 100%;
-    }
+        .main-menu > li:hover > a::before {
+            width: 100%;
+        }
 
-    .main-menu > li.has-child::after {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f107";
-        color: #fff;
-        position: absolute;
-        top: 0px;
-        padding-left: 0px;
-        padding: 23px 73px;
-    }
+        .main-menu > li.has-child::after {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f107";
+            color: #fff;
+            position: absolute;
+            top: 0px;
+            padding-left: 0px;
+            padding: 23px 73px;
+        }
 
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-    #h_daterangepicker p {
-        margin: 0 5px;
-    }
+        #h_daterangepicker p {
+            margin: 0 5px;
+        }
 
-    section {
-        background-size: cover; /* Cover the entire section */
-        background-attachment: fixed; /* Fix the background position */
-        height: 100vh; /* Set height to 100% of viewport height */
-        position: relative;
-    }
+        section {
+            background-size: cover; /* Cover the entire section */
+            background-attachment: fixed; /* Fix the background position */
+            height: 100vh; /* Set height to 100% of viewport height */
+            position: relative;
+        }
 
-    .img-30 img {
-        width: 100%; /* Đảm bảo hình ảnh lấp đầy không gian của phần tử cha */
-        height: auto; /* Chiều cao tự động dựa trên tỷ lệ khung hình ban đầu */
-    }
+        .img-30 img {
+            width: 100%; /* Đảm bảo hình ảnh lấp đầy không gian của phần tử cha */
+            height: auto; /* Chiều cao tự động dựa trên tỷ lệ khung hình ban đầu */
+        }
 
-    .search-form {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-    }
+        .search-form {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+        }
 
-    .search-form h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .search-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .search-form .form-control {
-        margin-bottom: 10px;
-    }
+        .search-form .form-control {
+            margin-bottom: 10px;
+        }
 
-    .search-form .btn-primary {
-        width: 100%;
-    }
+        .search-form .btn-primary {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -191,31 +191,11 @@
 <div class="wrapper">
     <section class="section1">
         <div class="container-qc">
-            <img
-                    class="advertisement-qc"
-                    src="../images/anh1.jpg"
-                    alt="Advertisement 1"
-            />
-            <img
-                    class="advertisement-qc"
-                    src="images/anh2.png"
-                    alt="Advertisement 2"
-            />
-            <img
-                    class="advertisement-qc"
-                    src="images/imagett.jpg"
-                    alt="Advertisement 3"
-            />
-            <img
-                    class="advertisement-qc"
-                    src="images/anh2.png"
-                    alt="Advertisement 4"
-            />
-            <img
-                    class="advertisement-qc"
-                    src="images/imagett.jpg"
-                    alt="Advertisement 5"
-            />
+            <img class="advertisement-qc" src="../images/anh1.jpg" alt="Advertisement 1"/>
+            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 2"/>
+            <img class="advertisement-qc" src="../images/imagett.jpg" alt="Advertisement 3"/>
+            <img class="advertisement-qc" src="../images/anh2.png" alt="Advertisement 4"/>
+            <img class="advertisement-qc" src="../images/imagett2.jpg" alt="Advertisement 5"/>
             <!-- Thêm các hình ảnh quảng cáo khác cần hiển thị -->
             <div class="page-selector-qc">
                 <button onclick="showAdvertisement(0)"></button>
@@ -233,7 +213,7 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="startDate">Từ ngày:</label>
-                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
+                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="yyyy-MM-dd" onchange="setEndDate()">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="endDate">Đến ngày:</label>
@@ -284,7 +264,6 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script>
     $(document).ready(function () {
         $(".sub-menu").parent("li").addClass("has-child");
@@ -341,5 +320,6 @@
     });
 </script>
 <th:block th:replace="~{layout::footer}"></th:block>
+<script th:src="@{/js/setEndday.js}"></script>
 </body>
 </html>

@@ -1,9 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.CuocThiService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuDangKyService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.QuyDinhService;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.UserService;
+import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +17,15 @@ public class HomeController {
     private final CuocThiService cuocThiService;
     private final PhieuDangKyService phieuDangKyService;
     private final QuyDinhService quyDinhService;
+    private final MonThiService monThiService;
+    private final LoaiTruongService loaiTruongService;
+
     @GetMapping
     public String home(Model model) {
         model.addAttribute("quyDinhs", quyDinhService.getAllQuyDinhsHien());
-        return "home/index";
+        model.addAttribute("monThis", monThiService.getAllMonThis());
+        model.addAttribute("loaiTruongs", loaiTruongService.getAllLoaiTruongs());
+        return "Home/index";
     }
 
     @GetMapping("/ThongKe")
@@ -39,6 +41,6 @@ public class HomeController {
         List<Object[]> userCountsByLoaiTruong = userService.getUserCountsByLoaiTruong();
         model.addAttribute("userCountsByLoaiTruong", userCountsByLoaiTruong);
 
-        return "home/thongKe";
+        return "Home/thongKe";
     }
 }
