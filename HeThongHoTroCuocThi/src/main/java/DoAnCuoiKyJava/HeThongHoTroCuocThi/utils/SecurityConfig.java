@@ -47,11 +47,11 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/",
-                                "/oauth/**", "/register", "/error","/CuocThis/User", "/QuyDinhs")
+                                "/oauth/**", "/register", "/error","/CuocThis/User")
                         .permitAll()
                         .requestMatchers("/LoaiTruongs", "/Truongs", "/MonThis", "/CuocThis", "/NoiDungs", "/PhieuKetQuas/add")
                         .hasAnyAuthority("ADMIN")
-                        .requestMatchers("/PhieuDangKys", "/PhieuKetQuas/search/")
+                        .requestMatchers("/PhieuDangKys")
                         .hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER", "OIDC_USER")
                         .anyRequest().authenticated()

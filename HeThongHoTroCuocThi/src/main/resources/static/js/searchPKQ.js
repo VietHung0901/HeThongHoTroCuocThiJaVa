@@ -1,5 +1,4 @@
-function searchPQK() {
-
+function searchPKQ() {
     const cccd = document.getElementById('cccd').value;
     const pdkId = document.getElementById('pdkId').value;
 
@@ -9,16 +8,14 @@ function searchPQK() {
         return;
     }
 
-    $.ajax({
-        url: '/PhieuKetQuas/search/' + pdkId,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
+    fetch('/PhieuKetQuas/search/' + pdkId)
+        .then(response => response.json())
+        .then(data => {
             let trHTML = '';
             // Kiểm tra nếu giá trị của cccd khác data.cccd
             if (cccd !== data.cccd) {
                 // Xóa các dữ liệu đang có trong bảng
-                $('#pkq-table-body').html('');
+                document.getElementById('pkq-table-body').innerHTML = '';
                 alert('Không tìm thấy thông tin!');
                 return;
             }
@@ -33,15 +30,15 @@ function searchPQK() {
                     '<td>' + data.tenTruong + '</td>' +
                     '<td>' + data.diem + '</td>' +
                     '<td>' + data.phut + ':' + data.giay + '</td>' +
-                    '<td>                     ' +
+                    '<td>' +
                     '<a class="btn btn-primary btn-sm" href="/PhieuKetQuas/cuocThiId/' + data.cuocThiId + '">kết quả cuộc thi</a>' +
-                    '</td>'
-                '</tr>';
+                    '</td>' +
+                    '</tr>';
             }
-            $('#pkq-table-body').html(trHTML);
-        },
-        error: function (xhr, status, error) {
+            document.getElementById('pkq-table-body').innerHTML = trHTML;
+        })
+        .catch(error => {
             console.error('Error:', error);
-        }
-    });
+            alert('Chưa có kết quả!');
+        });
 }

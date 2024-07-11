@@ -27,7 +27,6 @@ public class LoaiTruong {
 
     @OneToMany(mappedBy = "loaiTruong", cascade = CascadeType.ALL)
     @ToString.Exclude
-    @JsonManagedReference
     private List<Truong> truongs = new ArrayList<>();
 
     private int trangThai;

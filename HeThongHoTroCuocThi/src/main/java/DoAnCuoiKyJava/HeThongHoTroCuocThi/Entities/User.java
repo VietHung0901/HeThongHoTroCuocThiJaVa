@@ -57,7 +57,6 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "truong_id", referencedColumnName = "id")
     @ToString.Exclude
-    @JsonBackReference
     private Truong truong;
 
     @Column(name = "imageUrl")

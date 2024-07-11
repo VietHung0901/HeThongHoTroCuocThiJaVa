@@ -133,7 +133,7 @@ public class PhieuDangKyController {
 
         PhieuDangKy phieuDangKy = phieuDangKyService.mapToPhieuDangKy(phieuDangKyCreate);
         phieuDangKyService.addPhieuDangKy(phieuDangKy);
-        return "redirect:/CuocThis";
+        return "redirect:/PhieuDangKys/search";
     }
 
     @GetMapping("/edit/{id}")
