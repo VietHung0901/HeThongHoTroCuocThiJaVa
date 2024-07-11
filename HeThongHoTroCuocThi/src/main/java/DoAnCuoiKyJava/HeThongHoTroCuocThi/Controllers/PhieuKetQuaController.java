@@ -1,7 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Request.PhieuKetQuaRequest;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.CuocThiService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuDangKyService;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.PhieuKetQuaService;

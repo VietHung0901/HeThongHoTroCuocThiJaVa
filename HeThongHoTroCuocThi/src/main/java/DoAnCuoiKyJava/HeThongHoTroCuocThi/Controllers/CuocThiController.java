@@ -1,8 +1,6 @@
 package DoAnCuoiKyJava.HeThongHoTroCuocThi.Controllers;
 
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Entities.*;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IChiTietNoiDungRepository;
-import DoAnCuoiKyJava.HeThongHoTroCuocThi.Repositories.IChiTietQuyDinhRepository;
 import DoAnCuoiKyJava.HeThongHoTroCuocThi.Services.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -16,11 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -216,7 +210,6 @@ public class CuocThiController {
         return "redirect:/CuocThis";
     }
 
-    /*xem chi tiet cuoc thi */
     @GetMapping("/details/{id}")
     public String detailsCuocThi(@PathVariable Long id, Model model) {
         CuocThi cuocThi = cuocThiService.getCuocThiById(id)
@@ -231,7 +224,6 @@ public class CuocThiController {
         return "CuocThi/details";
     }
 
-    //////////////
     @GetMapping("/search")
     public String searchCuocThi(
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
